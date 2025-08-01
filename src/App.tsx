@@ -1,4 +1,4 @@
-import React from 'react';
+
 import WeatherWidget from './app/components/WeatherWidget';
 import './App.css';
 
