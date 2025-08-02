@@ -51,7 +51,7 @@ export const cleanCityNameForWeatherAPI = (cityName: string, countryCode: string
   const wordsToRemove = [
     'de', 'del', 'la', 'las', 'el', 'los', 'da', 'das', 'do', 'dos',
     'di', 'du', 'van', 'von', 'der', 'den', 'dem', 'des', 'le', 'les',
-    'of', 'the', 'and', 'y', 'e', 'o', 'ou', 'et', 'und', 'och'
+    'of', 'the', 'and', 'y', 'e', 'o', 'ou', 'et', 'und', 'och', 'perímetro', 'perimetro', 'urbano'
   ];
 
   // Dividir el nombre en palabras y filtrar las que no están en la lista de eliminación
