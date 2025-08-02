@@ -27,8 +27,6 @@ const WeatherWidget: React.FC = () => {
   // Hook para mostrar mensajes de error flotantes
   useErrorMessage(error);
 
-  console.log('error: ', error);
-
   const handleSearch = (query: string) => {
     setCurrentQuery(query);
     setShowSuggestions(true);
@@ -41,8 +39,11 @@ const WeatherWidget: React.FC = () => {
                      suggestion.local_names?.en || 
                      suggestion.name;
     
-    // Actualizar la ciudad seleccionada en Redux
-    dispatch(setSelectedCity(cityName));
+    // Crear búsqueda precisa con ciudad y código de país
+    const preciseSearch = `${cityName},${suggestion.country}`;
+    
+    // Actualizar la ciudad seleccionada en Redux con búsqueda precisa
+    dispatch(setSelectedCity(preciseSearch));
     
     setShowSuggestions(false);
     setCurrentQuery('');
