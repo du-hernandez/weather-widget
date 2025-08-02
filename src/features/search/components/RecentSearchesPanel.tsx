@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@shared/hooks/redux';
 import { selectSearchHistory } from '../store/selectors';
@@ -15,6 +15,11 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
   onClearHistory,
 }) => {
   const searchHistory = useAppSelector(selectSearchHistory);
+
+  // Organizar historial de forma ascendente (más recientes primero)
+  const sortedHistory = useMemo(() => {
+    return [...searchHistory].sort((a, b) => b.timestamp - a.timestamp);
+  }, [searchHistory]);
 
   const handleHistoryItemClick = (city: string, country: string) => {
     if (onSelectSearch) {
@@ -41,7 +46,7 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
         <h3 className="recent-searches-title">
           Búsquedas recientes
         </h3>
-        {searchHistory.length > 0 && (
+        {sortedHistory.length > 0 && (
           <button 
             className="clear-history-button"
             onClick={handleClearHistory}
@@ -53,33 +58,35 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
       </div>
 
       <div className="recent-searches-list">
-        {searchHistory.length === 0 ? (
+        {sortedHistory.length === 0 ? (
           <div className="empty-history">
             <p>No hay búsquedas recientes</p>
           </div>
         ) : (
-          searchHistory.map((item) => (
-            <div
-              key={item.id}
-              className="history-item"
-              onClick={() => handleHistoryItemClick(item.city, item.country)}
-            >
-              <div className="history-item-icon">
-                <ClockCircleOutlined />
-              </div>
-              <div className="history-item-content">
-                <div className="history-item-city">
-                  {item.city}
+          <div className="history-items-container">
+            {sortedHistory.map((item) => (
+              <div
+                key={item.id}
+                className="history-item"
+                onClick={() => handleHistoryItemClick(item.city, item.country)}
+              >
+                <div className="history-item-icon">
+                  <ClockCircleOutlined />
                 </div>
-                <div className="history-item-details">
-                  <span className="history-item-country">{item.country}</span>
-                  <span className="history-item-time">
-                    {formatTimestamp(item.timestamp)}
-                  </span>
+                <div className="history-item-content">
+                  <div className="history-item-city">
+                    {item.city}
+                  </div>
+                  <div className="history-item-details">
+                    <span className="history-item-country">{item.country}</span>
+                    <span className="history-item-time">
+                      {formatTimestamp(item.timestamp)}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
     </div>

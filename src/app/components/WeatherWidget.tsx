@@ -7,6 +7,7 @@ import SearchBar from '@features/search/components/SearchBar';
 import SearchSuggestions from '@features/search/components/SearchSuggestions';
 import CurrentWeather from '@features/weather/components/CurrentWeather';
 import ProgressBarWrapper from '@app/components/ProgressBarWrapper';
+import RecentSearchesPanel from '@features/search/components/RecentSearchesPanel';
 import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
@@ -107,6 +108,19 @@ const WeatherWidget: React.FC = () => {
     };
   }, []);
 
+  // Handler para seleccionar búsqueda del historial
+  const handleHistorySearch = useCallback((city: string, country: string) => {
+    const preciseSearch = `${city},${country}`;
+    console.log('handleHistorySearch', preciseSearch);
+    dispatch(setSelectedCity(preciseSearch));
+  }, [dispatch]);
+
+  // Handler para limpiar historial
+  const handleClearHistory = useCallback(() => {
+    // TODO: Implementar limpieza de historial
+    console.log('Limpiar historial');
+  }, []);
+
   // Memoizar props del SearchBar
   const searchBarProps = useMemo(() => ({
     onSearch: handleSearch,
@@ -122,6 +136,12 @@ const WeatherWidget: React.FC = () => {
     onSelectSuggestion: handleSelectSuggestion,
     visible: showSuggestions
   }), [currentQuery, handleSelectSuggestion, showSuggestions]);
+
+  // Memoizar props del RecentSearchesPanel
+  const recentSearchesProps = useMemo(() => ({
+    onSelectSearch: handleHistorySearch,
+    onClearHistory: handleClearHistory
+  }), [handleHistorySearch, handleClearHistory]);
 
   return (
     <>
@@ -155,14 +175,7 @@ const WeatherWidget: React.FC = () => {
 
           {/* Panel histórico - Grid Area: history */}
           <div style={{ gridArea: 'history' }}>
-            <div className="glass-effect" style={{ height: '100%', padding: '24px', minWidth: '280px' }}>
-              <h3 className="text-shadow" style={{ color: 'var(--text-primary)', marginBottom: '16px' }}>
-                Búsquedas recientes
-              </h3>
-              <p style={{ color: 'var(--text-secondary)' }}>
-                Historial de búsquedas aquí...
-              </p>
-            </div>
+            <RecentSearchesPanel {...recentSearchesProps} />
           </div>
 
           {/* Espacio para mapa - Grid Area: map */}

@@ -1,11 +1,14 @@
-// Estilos globales
+@use 'sass:math';
+
+// Variables globales
 @use './global.scss';
 
-// Estilos de componentes
+// Componentes
 @use './components/weather-widget.scss';
 @use './components/search-panel.scss';
 @use './components/search-suggestions.scss';
 @use './components/weather-panel.scss';
+@use './components/progress-bar.scss';
+@use './components/recent-searches.scss';
 @use './components/history-panel.scss';
-@use './components/map-placeholder.scss';
-@use './components/progress-bar.scss'; 
+@use './components/map-placeholder.scss'; 
