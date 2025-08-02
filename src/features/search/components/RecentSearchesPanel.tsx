@@ -1,0 +1,89 @@
+import React from 'react';
+import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useAppSelector } from '@shared/hooks/redux';
+import { selectSearchHistory } from '../store/selectors';
+import { formatDistanceToNow } from 'date-fns';
+import { es } from 'date-fns/locale';
+
+interface RecentSearchesPanelProps {
+  onSelectSearch?: (city: string, country: string) => void;
+  onClearHistory?: () => void;
+}
+
+const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
+  onSelectSearch,
+  onClearHistory,
+}) => {
+  const searchHistory = useAppSelector(selectSearchHistory);
+
+  const handleHistoryItemClick = (city: string, country: string) => {
+    if (onSelectSearch) {
+      onSelectSearch(city, country);
+    }
+  };
+
+  const handleClearHistory = () => {
+    if (onClearHistory) {
+      onClearHistory();
+    }
+  };
+
+  const formatTimestamp = (timestamp: number) => {
+    return formatDistanceToNow(timestamp, { 
+      addSuffix: true, 
+      locale: es 
+    });
+  };
+
+  return (
+    <div className="recent-searches-panel">
+      <div className="recent-searches-header">
+        <h3 className="recent-searches-title">
+          Búsquedas recientes
+        </h3>
+        {searchHistory.length > 0 && (
+          <button 
+            className="clear-history-button"
+            onClick={handleClearHistory}
+            title="Limpiar historial"
+          >
+            <DeleteOutlined />
+          </button>
+        )}
+      </div>
+
+      <div className="recent-searches-list">
+        {searchHistory.length === 0 ? (
+          <div className="empty-history">
+            <p>No hay búsquedas recientes</p>
+          </div>
+        ) : (
+          searchHistory.map((item) => (
+            <div
+              key={item.id}
+              className="history-item"
+              onClick={() => handleHistoryItemClick(item.city, item.country)}
+            >
+              <div className="history-item-icon">
+                <ClockCircleOutlined />
+              </div>
+              <div className="history-item-content">
+                <div className="history-item-city">
+                  {item.city}
+                </div>
+                <div className="history-item-details">
+                  <span className="history-item-country">{item.country}</span>
+                  <span className="history-item-time">
+                    {formatTimestamp(item.timestamp)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default RecentSearchesPanel; 

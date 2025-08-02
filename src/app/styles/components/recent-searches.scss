@@ -1,0 +1,219 @@
+.recent-searches-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-backdrop);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glass-shadow-hover);
+  }
+
+  .recent-searches-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .recent-searches-title {
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: var(--text-shadow);
+    }
+
+    .clear-history-button {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: var(--accent-primary);
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.1);
+      }
+
+      svg {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .recent-searches-list {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .empty-history {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-secondary);
+      font-style: italic;
+      text-align: center;
+      padding: 20px;
+
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--glass-border);
+        transform: translateX(4px);
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .history-item-icon {
+        margin-right: 12px;
+        color: var(--accent-primary);
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+      }
+
+      .history-item-content {
+        flex: 1;
+        min-width: 0;
+
+        .history-item-city {
+          color: var(--text-primary);
+          font-weight: 500;
+          font-size: 14px;
+          margin-bottom: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .history-item-details {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 12px;
+          color: var(--text-secondary);
+
+          .history-item-country {
+            font-weight: 400;
+          }
+
+          .history-item-time {
+            font-style: italic;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (width < 768px) {
+  .recent-searches-panel {
+    padding: 16px;
+
+    .recent-searches-header {
+      margin-bottom: 12px;
+
+      .recent-searches-title {
+        font-size: 16px;
+      }
+    }
+
+    .recent-searches-list {
+      .history-item {
+        padding: 10px;
+
+        .history-item-icon {
+          font-size: 14px;
+          width: 20px;
+          height: 20px;
+        }
+
+        .history-item-content {
+          .history-item-city {
+            font-size: 13px;
+          }
+
+          .history-item-details {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (width >= 768px) and (width < 1024px) {
+  .recent-searches-panel {
+    .recent-searches-header {
+      .recent-searches-title {
+        font-size: 17px;
+      }
+    }
+  }
+}
+
+@media (width >= 1024px) {
+  .recent-searches-panel {
+    .recent-searches-header {
+      .recent-searches-title {
+        font-size: 19px;
+      }
+    }
+
+    .recent-searches-list {
+      .history-item {
+        .history-item-content {
+          .history-item-city {
+            font-size: 15px;
+          }
+
+          .history-item-details {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+} 
