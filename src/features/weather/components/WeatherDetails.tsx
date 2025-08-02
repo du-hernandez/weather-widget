@@ -27,15 +27,15 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({
       <div className="detail-item">
         <CloudOutlined className="detail-icon" />
         <div className="detail-content">
-          <span className="detail-label">Humidity</span>
-          <span className="detail-value">{humidity}% Humidity</span>
+          <span className="detail-label">Humedad</span>
+          <span className="detail-value">{humidity}%</span>
         </div>
       </div>
 
       <div className="detail-item">
         <GlobalOutlined className="detail-icon" />
         <div className="detail-content">
-          <span className="detail-label">Wind Speed</span>
+          <span className="detail-label">Velocidad del viento</span>
           <span className="detail-value">{formatWindSpeed(windSpeed, units)}</span>
         </div>
       </div>
@@ -43,9 +43,9 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({
       <div className="detail-item">
         <ThunderboltOutlined className="detail-icon" />
         <div className="detail-content">
-          <span className="detail-label">Feels like</span>
+          <span className="detail-label">Sensación térmica</span>
           <span className="detail-value">
-            Feels like {formatTemperature(temperature.feelsLike, units)}
+            {formatTemperature(temperature.feelsLike, units)}
           </span>
         </div>
       </div>
@@ -53,7 +53,7 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({
       <div className="detail-item">
         <EyeOutlined className="detail-icon" />
         <div className="detail-content">
-          <span className="detail-label">Visibility</span>
+          <span className="detail-label">Visibilidad</span>
           <span className="detail-value">{(visibility / 1000).toFixed(1)} km</span>
         </div>
       </div>
