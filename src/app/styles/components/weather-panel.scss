@@ -180,88 +180,88 @@
     }
 
     // Mejoras para pantallas grandes
-    @media (width >= 1200px) {
-      padding: 32px;
+    // @media (width >= 1200px) {
+    //   padding: 32px;
 
-      .weather-header {
-        margin-bottom: 32px;
+    //   .weather-header {
+    //     margin-bottom: 32px;
 
-        .weather-title {
-          font-size: 24px;
-        }
+    //     .weather-title {
+    //       font-size: 24px;
+    //     }
 
-        .weather-icon-container {
-          width: 100px;
-          height: 100px;
+    //     .weather-icon-container {
+    //       width: 100px;
+    //       height: 100px;
 
-          .weather-icon {
-            width: 100px;
-            height: 100px;
-          }
-        }
-      }
+    //       .weather-icon {
+    //         width: 100px;
+    //         height: 100px;
+    //       }
+    //     }
+    //   }
 
-      .weather-main {
-        margin-bottom: 32px;
+    //   .weather-main {
+    //     margin-bottom: 32px;
 
-        .temperature-section {
-          .current-temperature {
-            font-size: 72px;
-          }
+    //     .temperature-section {
+    //       .current-temperature {
+    //         font-size: 72px;
+    //       }
 
-          .city-info {
-            margin-top: 12px;
+    //       .city-info {
+    //         margin-top: 12px;
 
-            .city-name {
-              font-size: 24px;
-            }
+    //         .city-name {
+    //           font-size: 24px;
+    //         }
 
-            .country-code {
-              font-size: 18px;
-            }
-          }
-        }
+    //         .country-code {
+    //           font-size: 18px;
+    //         }
+    //       }
+    //     }
 
-        .weather-description {
-          font-size: 20px;
-        }
-      }
+    //     .weather-description {
+    //       font-size: 20px;
+    //     }
+    //   }
 
-      .weather-details {
-        gap: 24px;
+    //   .weather-details {
+    //     gap: 24px;
 
-        .detail-item {
-          padding: 20px;
+    //     .detail-item {
+    //       padding: 20px;
 
-          .detail-icon {
-            font-size: 24px;
-          }
+    //       .detail-icon {
+    //         font-size: 24px;
+    //       }
 
-          .detail-content {
-            .detail-label {
-              font-size: 14px;
-            }
+    //       .detail-content {
+    //         .detail-label {
+    //           font-size: 14px;
+    //         }
 
-            .detail-value {
-              font-size: 18px;
-            }
-          }
-        }
-      }
+    //         .detail-value {
+    //           font-size: 18px;
+    //         }
+    //       }
+    //     }
+    //   }
 
-      .weather-extended {
-        margin-top: 32px;
-        padding-top: 24px;
+    //   .weather-extended {
+    //     margin-top: 32px;
+    //     padding-top: 24px;
 
-        .extended-title {
-          font-size: 16px;
-        }
+    //     .extended-title {
+    //       font-size: 16px;
+    //     }
 
-        .extended-info {
-          font-size: 14px;
-        }
-      }
-    }
+    //     .extended-info {
+    //       font-size: 14px;
+    //     }
+    //   }
+    // }
 
     // Responsive design para tablets
     @media (width <= 768px) {
