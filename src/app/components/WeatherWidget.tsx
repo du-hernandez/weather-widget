@@ -35,14 +35,6 @@ const WeatherWidget: React.FC = () => {
     
     setShowSuggestions(false);
     setCurrentQuery('');
-    
-    // El hook useWeatherAndForecast se ejecutará automáticamente
-    // cuando selectedCity cambie en Redux
-  };
-
-  const handleShowHistory = () => {
-    // TODO: Implementar modal de historial
-    console.log('Mostrar historial');
   };
 
   return (
@@ -64,7 +56,6 @@ const WeatherWidget: React.FC = () => {
               <div style={{ position: 'relative' }}>
                 <SearchBar
                   onSearch={handleSearch}
-                  onShowHistory={handleShowHistory}
                   loading={isLoading}
                   placeholder="Buscar ciudad (ej: London, Madrid, Tokyo)..."
                 />

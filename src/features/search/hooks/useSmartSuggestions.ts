@@ -1,6 +1,6 @@
 import { useAppSelector } from '@shared/hooks/redux';
 import { useSearchCities } from './useSearch';
-import { selectRecentSearchHistory } from '../store/selectors';
+import { selectRecentSearchHistory, selectCurrentQuery } from '../store/selectors';
 
 
 /**
@@ -19,13 +19,6 @@ export const useSmartSuggestions = (query: string) => {
     q: query, // Usar query directo en lugar de debouncedQuery
     limit: 5,
   });
-
-  // TODO: Mejorar la lógica de sugerencias. Por qué una ciudad en historico no tiene la propiedad city?
-  // // Determinar sugerencias y fuente
-  // const suggestions = recentHistory.length > 0 
-  // // TODO: Implementar constante para el número de sugerencias y aplicarlo a toda la aplicación
-  //   ? recentHistory.slice(0, 5) // Máximo 5 del historial
-  //   : apiResults || [];
 
   const suggestions = apiResults || [];
 
