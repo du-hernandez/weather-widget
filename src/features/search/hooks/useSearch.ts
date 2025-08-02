@@ -8,7 +8,8 @@ import {
   addToHistory,
   clearSearch 
 } from '../store/searchSlice';
-import searchApiService, { type SearchApiParams, type ReverseGeocodingParams } from '../services/searchApi';
+import searchApiService from '../services/searchApi';
+import type { SearchApiParams, ReverseGeocodingParams } from '../services/searchApi';
 import type { SearchResult } from '../types';
 
 // Query keys para cache

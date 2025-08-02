@@ -1,5 +1,4 @@
 import { useAppSelector } from '@shared/hooks/redux';
-import { useDebounce } from '@shared/hooks/useDebounce';
 import { useSearchCities } from './useSearch';
 import { selectRecentSearchHistory } from '../store/selectors';
 
@@ -10,23 +9,25 @@ import { selectRecentSearchHistory } from '../store/selectors';
  * @returns Sugerencias y fuente de datos
  */
 export const useSmartSuggestions = (query: string) => {
-    // TODO: Implementar constante para el delay de debounce y aplicarlo a toda la aplicación
-  const debouncedQuery = useDebounce(query, 500);
   const recentHistory = useAppSelector(selectRecentSearchHistory);
   
-  // Solo buscar en API si no hay historial reciente y hay query
-  const shouldSearchAPI = recentHistory.length === 0 && debouncedQuery.length >= 2;
+  // Buscar en API si hay query válido (2+ caracteres)
+  const shouldSearchAPI = query.length >= 2;
   
+  // TODO: Implementar constante para el número de sugerencias y aplicarlo a toda la aplicación
   const { data: apiResults, isLoading } = useSearchCities({
-    q: debouncedQuery,
+    q: query, // Usar query directo en lugar de debouncedQuery
     limit: 5,
   });
 
-  // Determinar sugerencias y fuente
-  const suggestions = recentHistory.length > 0 
-  // TODO: Implementar constante para el número de sugerencias y aplicarlo a toda la aplicación
-    ? recentHistory.slice(0, 5) // Máximo 5 del historial
-    : apiResults || [];
+  // TODO: Mejorar la lógica de sugerencias. Por qué una ciudad en historico no tiene la propiedad city?
+  // // Determinar sugerencias y fuente
+  // const suggestions = recentHistory.length > 0 
+  // // TODO: Implementar constante para el número de sugerencias y aplicarlo a toda la aplicación
+  //   ? recentHistory.slice(0, 5) // Máximo 5 del historial
+  //   : apiResults || [];
+
+  const suggestions = apiResults || [];
 
   const source = recentHistory.length > 0 ? 'history' : 'api';
 

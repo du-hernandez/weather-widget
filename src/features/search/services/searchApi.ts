@@ -17,8 +17,8 @@ class SearchApiService {
    * Busca ciudades por nombre
    */
   async searchCities(params: SearchApiParams): Promise<SearchResult[]> {
-    // Usar el endpoint de geocoding directo
-    const response = await httpClient.get<SearchResult[]>('/geo/1.0/direct', {
+    // Usar el endpoint de geocoding directo con URL completa
+    const response = await httpClient.get<SearchResult[]>('https://api.openweathermap.org/geo/1.0/direct', {
       q: params.q,
       limit: params.limit || 5,
     });
@@ -29,7 +29,7 @@ class SearchApiService {
    * Obtiene información de ciudad por coordenadas (reverse geocoding)
    */
   async getCityByCoordinates(params: ReverseGeocodingParams): Promise<SearchResult[]> {
-    const response = await httpClient.get<SearchResult[]>('/geo/1.0/reverse', {
+    const response = await httpClient.get<SearchResult[]>('https://api.openweathermap.org/geo/1.0/reverse', {
       lat: params.lat,
       lon: params.lon,
       limit: params.limit || 1,

@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
 import weatherReducer from '@features/weather/store/weatherSlice';
 import searchReducer from '@features/search/store/searchSlice';
+import mapReducer from '@features/map/store/mapSlice';
 import type { RootState } from './types';
 
 export const store = configureStore({
   reducer: {
     weather: weatherReducer,
     search: searchReducer,
+    map: mapReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
