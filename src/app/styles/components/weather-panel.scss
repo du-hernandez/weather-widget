@@ -275,18 +275,18 @@
         justify-content: space-between; // Distribuir elementos
 
         .weather-title {
-          font-size: 16px;
+          font-size: 18px; // Mantener tamaño original
           order: 1;
         }
 
         .weather-icon-container {
-          width: 60px; // Reducir tamaño
-          height: 60px;
+          width: 80px; // Mantener tamaño original
+          height: 80px;
           order: 2;
 
           .weather-icon {
-            width: 40px; // Reducir tamaño
-            height: 40px;
+            width: 60px; // Mantener tamaño original
+            height: 60px;
           }
         }
       }
@@ -359,16 +359,16 @@
         margin-bottom: 12px; // Margen más reducido
 
         .weather-title {
-          font-size: 15px; // Tamaño ligeramente menor
+          font-size: 18px; // Mantener tamaño original
         }
 
         .weather-icon-container {
-          width: 55px; // Tamaño ligeramente menor
-          height: 55px;
+          width: 90px; // Mantener tamaño original
+          height: 90px;
 
           .weather-icon {
-            width: 35px; // Tamaño ligeramente menor
-            height: 35px;
+            width: 90px; // Mantener tamaño original
+            height: 90px;
           }
         }
       }
@@ -436,12 +436,12 @@
         }
 
         .weather-icon-container {
-          width: 60px;
-          height: 60px;
+          width: 90px;
+          height: 90px;
 
           .weather-icon {
-            width: 40px;
-            height: 40px;
+            width: 90px;
+            height: 90px;
           }
         }
       }
