@@ -2,9 +2,6 @@
 .weather-panel {
   // Estilos específicos para el panel del clima
   .current-weather {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-backdrop);
-    border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 24px;
     color: var(--text-primary);
@@ -17,7 +14,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
       flex-shrink: 0; // Evitar que se comprima
 
       .weather-title {
@@ -60,7 +56,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
       flex-shrink: 0; // Evitar que se comprima
 
       .temperature-section {
@@ -76,8 +71,6 @@
         }
 
         .city-info {
-          margin-top: 8px;
-
           .city-name {
             font-size: 16px;
             font-weight: 600;
@@ -89,7 +82,6 @@
           .country-code {
             font-size: 14px;
             color: var(--text-secondary);
-            margin-top: 4px;
           }
         }
       }

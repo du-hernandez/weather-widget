@@ -20,7 +20,7 @@ class SearchApiService {
     // Usar el endpoint de geocoding directo con URL completa
     const response = await httpClient.get<SearchResult[]>('https://api.openweathermap.org/geo/1.0/direct', {
       q: params.q,
-      limit: params.limit || 5,
+      limit: params.limit || 20, // Aumentado de 5 a 20 sugerencias por defecto
     });
     return response.data;
   }

@@ -31,7 +31,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const debouncedInputValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
-    if (debouncedInputValue !== '') {
+    if (debouncedInputValue.length > 2 ) {
       handleSearch(debouncedInputValue);
     }
   }, [debouncedInputValue]);

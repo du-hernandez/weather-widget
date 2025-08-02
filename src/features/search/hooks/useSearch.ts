@@ -29,6 +29,9 @@ export const useSearchCities = (params: SearchApiParams) => {
     queryKey: searchKeys.cities(params),
     queryFn: () => searchApiService.searchCities(params),
     enabled: params.q.length >= 2, // Solo buscar si hay al menos 2 caracteres
+    staleTime: 0, // Los datos se consideran obsoletos inmediatamente
+    gcTime: 0, // No cachear los datos (antes era cacheTime)
+    refetchOnWindowFocus: false, // No refetch al enfocar la ventana
   });
 
   // Efectos para manejar el estado de Redux
