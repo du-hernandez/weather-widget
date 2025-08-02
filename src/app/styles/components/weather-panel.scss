@@ -265,39 +265,161 @@
 
     // Responsive design para tablets
     @media (width <= 768px) {
-      padding: 16px;
+      padding: 12px; // Reducir padding para más espacio
 
       .weather-header {
+        flex-direction: row; // Mantener horizontal
+        gap: 12px;
+        text-align: left; // Alinear a la izquierda
+        margin-bottom: 16px; // Reducir margen
+        justify-content: space-between; // Distribuir elementos
+
+        .weather-title {
+          font-size: 16px;
+          order: 1;
+        }
+
         .weather-icon-container {
-          width: 70px;
-          height: 70px;
+          width: 60px; // Reducir tamaño
+          height: 60px;
+          order: 2;
 
           .weather-icon {
-            width: 50px;
-            height: 50px;
+            width: 40px; // Reducir tamaño
+            height: 40px;
           }
         }
       }
 
       .weather-main {
-        flex-direction: column;
-        text-align: center;
-        gap: 16px;
+        flex-direction: row; // Mantener horizontal
+        text-align: left; // Alinear a la izquierda
+        gap: 12px; // Reducir gap
+        margin-bottom: 16px; // Reducir margen
+        justify-content: space-between; // Distribuir elementos
 
         .temperature-section {
+          order: 1; // Temperatura a la izquierda
+
           .current-temperature {
-            font-size: 36px;
+            font-size: 32px; // Reducir tamaño
+            margin-bottom: 6px; // Reducir margen
+          }
+
+          .city-info {
+            .city-name {
+              font-size: 13px; // Reducir tamaño
+            }
+
+            .country-code {
+              font-size: 11px; // Reducir tamaño
+            }
           }
         }
 
         .weather-description {
-          text-align: center;
+          text-align: right; // Descripción a la derecha
+          order: 2;
+          font-size: 13px; // Reducir tamaño
+          align-self: center; // Centrar verticalmente
         }
       }
 
       .weather-details {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 10px; // Reducir gap
+        flex: 1;
+
+        .detail-item {
+          padding: 10px; // Reducir padding
+          gap: 8px; // Reducir gap
+
+          .detail-icon {
+            font-size: 16px; // Reducir tamaño
+          }
+
+          .detail-content {
+            .detail-label {
+              font-size: 10px; // Reducir tamaño
+            }
+
+            .detail-value {
+              font-size: 13px; // Reducir tamaño
+            }
+          }
+        }
+      }
+    }
+
+    // Optimización específica para el rango 481px-768px
+    @media (width >= 481px) and (width <= 768px) {
+      padding: 10px; // Padding aún más reducido
+
+      .weather-header {
+        margin-bottom: 12px; // Margen más reducido
+
+        .weather-title {
+          font-size: 15px; // Tamaño ligeramente menor
+        }
+
+        .weather-icon-container {
+          width: 55px; // Tamaño ligeramente menor
+          height: 55px;
+
+          .weather-icon {
+            width: 35px; // Tamaño ligeramente menor
+            height: 35px;
+          }
+        }
+      }
+
+      .weather-main {
+        gap: 10px; // Gap más reducido
+        margin-bottom: 12px; // Margen más reducido
+
+        .temperature-section {
+          .current-temperature {
+            font-size: 30px; // Tamaño ligeramente menor
+            margin-bottom: 4px; // Margen más reducido
+          }
+
+          .city-info {
+            .city-name {
+              font-size: 12px; // Tamaño ligeramente menor
+            }
+
+            .country-code {
+              font-size: 10px; // Tamaño ligeramente menor
+            }
+          }
+        }
+
+        .weather-description {
+          font-size: 12px; // Tamaño ligeramente menor
+        }
+      }
+
+      .weather-details {
+        gap: 8px; // Gap más reducido
+
+        .detail-item {
+          padding: 8px; // Padding más reducido
+          gap: 6px; // Gap más reducido
+
+          .detail-icon {
+            font-size: 15px; // Tamaño ligeramente menor
+          }
+
+          .detail-content {
+            .detail-label {
+              font-size: 9px; // Tamaño ligeramente menor
+            }
+
+            .detail-value {
+              font-size: 12px; // Tamaño ligeramente menor
+            }
+          }
+        }
       }
     }
 
@@ -307,9 +429,10 @@
 
       .weather-header {
         margin-bottom: 16px;
+        gap: 8px;
 
         .weather-title {
-          font-size: 16px;
+          font-size: 14px;
         }
 
         .weather-icon-container {
@@ -324,29 +447,49 @@
       }
 
       .weather-main {
+        gap: 12px;
+        margin-bottom: 16px;
+
         .temperature-section {
           .current-temperature {
             font-size: 32px;
+            margin-bottom: 6px;
           }
+
+          .city-info {
+            .city-name {
+              font-size: 12px;
+            }
+
+            .country-code {
+              font-size: 10px;
+            }
+          }
+        }
+
+        .weather-description {
+          font-size: 12px;
         }
       }
 
       .weather-details {
+        gap: 8px;
+
         .detail-item {
-          padding: 12px;
+          padding: 10px;
           gap: 8px;
 
           .detail-icon {
-            font-size: 18px;
+            font-size: 16px;
           }
 
           .detail-content {
             .detail-label {
-              font-size: 11px;
+              font-size: 10px;
             }
 
             .detail-value {
-              font-size: 14px;
+              font-size: 12px;
             }
           }
         }

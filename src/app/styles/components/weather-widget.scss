@@ -26,7 +26,20 @@
 
   // Responsive design con nueva notación
   @media (width <= 768px) {
-    grid-template-rows: auto auto auto 1fr auto;
+    height: auto; // Permitir que el contenido determine la altura
+    min-height: 100vh; // Mínimo altura de pantalla
+    overflow: visible; // Permitir scroll
+    
+    // Ocultar barra del scroll pero mantener funcionalidad
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // Internet Explorer 10+
+    
+    // Ocultar scrollbar en WebKit (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    
+    grid-template-rows: auto auto auto auto auto;
     grid-template-columns: 1fr;
     grid-template-areas: 
       "search"
