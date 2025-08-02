@@ -29,10 +29,22 @@ export const selectRecentSearchHistory = createSelector(
 export const selectSearchHistoryByCity = createSelector(
   [selectSearchHistory, selectCurrentQuery],
   (searchHistory, currentQuery) => {
-    if (!currentQuery) return searchHistory;
+    if (!currentQuery || currentQuery.trim() === '') return searchHistory;
+    
+    const normalizedQuery = currentQuery.toLowerCase().trim();
     return searchHistory.filter(item =>
-      item.city.toLowerCase().includes(currentQuery.toLowerCase()) ||
-      item.country.toLowerCase().includes(currentQuery.toLowerCase())
+      item.city.toLowerCase().includes(normalizedQuery) ||
+      item.country.toLowerCase().includes(normalizedQuery)
     );
   }
+);
+
+export const selectSearchHistoryStats = createSelector(
+  [selectSearchHistory],
+  (searchHistory) => ({
+    totalItems: searchHistory.length,
+    uniqueCities: new Set(searchHistory.map(item => item.city)).size,
+    uniqueCountries: new Set(searchHistory.map(item => item.country)).size,
+    lastSearch: searchHistory[0]?.timestamp || null,
+  })
 ); 

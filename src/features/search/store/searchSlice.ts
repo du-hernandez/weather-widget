@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
 import type { SearchState, SearchResult, SearchHistoryItem } from '../types';
+import { searchPersistConfig } from '../../../app/store/persistConfig';
 
 const initialState: SearchState = {
   isLoading: false,
@@ -93,4 +95,5 @@ export const {
   clearSearch,
 } = searchSlice.actions;
 
-export default searchSlice.reducer; 
+// Aplicar persistencia solo al historial de búsqueda
+export default persistReducer(searchPersistConfig, searchSlice.reducer); 
