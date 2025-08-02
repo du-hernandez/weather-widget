@@ -28,11 +28,32 @@
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
 
-      .weather-icon {
-        width: 60px;
-        height: 60px;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-      }
+      // .weather-icon-container {
+      //   position: relative;
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
+      //   width: 80px;
+      //   height: 80px;
+      //   background: rgba(255, 255, 255, 0.1);
+      //   border-radius: 50%;
+      //   backdrop-filter: blur(10px);
+      //   border: 1px solid rgba(255, 255, 255, 0.2);
+      //   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      //   transition: all 0.3s ease;
+
+      //   &:hover {
+      //     transform: scale(1.05);
+      //     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      //   }
+
+      //   .weather-icon {
+      //     width: 60px;
+      //     height: 60px;
+      //     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+      //     transition: all 0.3s ease;
+      //   }
+      // }
     }
 
     .weather-main {
@@ -176,9 +197,14 @@
           font-size: 24px;
         }
 
-        .weather-icon {
-          width: 80px;
-          height: 80px;
+        .weather-icon-container {
+          width: 100px;
+          height: 100px;
+
+          .weather-icon {
+            width: 100px;
+            height: 100px;
+          }
         }
       }
 
@@ -248,6 +274,18 @@
     @media (width <= 768px) {
       padding: 16px;
 
+      .weather-header {
+        .weather-icon-container {
+          width: 70px;
+          height: 70px;
+
+          .weather-icon {
+            width: 50px;
+            height: 50px;
+          }
+        }
+      }
+
       .weather-main {
         flex-direction: column;
         text-align: center;
@@ -281,9 +319,14 @@
           font-size: 16px;
         }
 
-        .weather-icon {
-          width: 50px;
-          height: 50px;
+        .weather-icon-container {
+          width: 60px;
+          height: 60px;
+
+          .weather-icon {
+            width: 40px;
+            height: 40px;
+          }
         }
       }
 

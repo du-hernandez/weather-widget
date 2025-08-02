@@ -12,11 +12,14 @@ const WeatherHeader: React.FC<WeatherHeaderProps> = ({ iconCode, description }) 
   return (
     <div className="weather-header">
       <h3 className="weather-title">Current</h3>
-      <img 
-        src={weatherIcon} 
-        alt={description}
-        className="weather-icon"
-      />
+      <div className="weather-icon-container">
+        <img 
+          src={weatherIcon} 
+          alt={description}
+          className="weather-icon"
+          title={description}
+        />
+      </div>
     </div>
   );
 };
