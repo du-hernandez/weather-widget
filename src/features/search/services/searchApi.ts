@@ -1,0 +1,42 @@
+import httpClient from '@shared/services/http-client';
+import type { SearchResult } from '../types';
+
+export interface SearchApiParams {
+  q: string;
+  limit?: number;
+}
+
+export interface ReverseGeocodingParams {
+  lat: number;
+  lon: number;
+  limit?: number;
+}
+
+class SearchApiService {
+  /**
+   * Busca ciudades por nombre
+   */
+  async searchCities(params: SearchApiParams): Promise<SearchResult[]> {
+    // Usar el endpoint de geocoding directo
+    const response = await httpClient.get<SearchResult[]>('/geo/1.0/direct', {
+      q: params.q,
+      limit: params.limit || 5,
+    });
+    return response.data;
+  }
+
+  /**
+   * Obtiene información de ciudad por coordenadas (reverse geocoding)
+   */
+  async getCityByCoordinates(params: ReverseGeocodingParams): Promise<SearchResult[]> {
+    const response = await httpClient.get<SearchResult[]>('/geo/1.0/reverse', {
+      lat: params.lat,
+      lon: params.lon,
+      limit: params.limit || 1,
+    });
+    return response.data;
+  }
+}
+
+export const searchApiService = new SearchApiService();
+export default searchApiService; 
