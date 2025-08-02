@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Alert } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
-import { useLoading } from '@shared/hooks/useLoading';
+import { useWeatherLoading } from '@shared/hooks/useLoading';
 import { selectSelectedCity } from '@features/weather/store/selectors';
 import SearchBar from '@features/search/components/SearchBar';
 import SearchSuggestions from '@features/search/components/SearchSuggestions';
@@ -11,28 +10,39 @@ import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
+import { useErrorMessage } from '@shared/hooks/useErrorMessage';
 import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector(selectSelectedCity);
-  const { isLoading, error } = useLoading();
+  const { isLoading, error } = useWeatherLoading();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
 
   // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
-  
+  useWeatherAndForecast({ q: selectedCity || '' });
+
+  // Hook para mostrar mensajes de error flotantes
+  useErrorMessage(error);
+
+  console.log('error: ', error);
+
   const handleSearch = (query: string) => {
     setCurrentQuery(query);
     setShowSuggestions(true);
   };
 
-  useWeatherAndForecast({ q: selectedCity || '' });
-
   const handleSelectSuggestion = (suggestion: SearchResult) => {
+    // Usar el nombre más apropiado para la búsqueda
+    // Preferir el nombre local en español si está disponible, sino usar el nombre principal
+    const cityName = suggestion.local_names?.es || 
+                     suggestion.local_names?.en || 
+                     suggestion.name;
+    
     // Actualizar la ciudad seleccionada en Redux
-    dispatch(setSelectedCity(suggestion.name));
+    dispatch(setSelectedCity(cityName));
     
     setShowSuggestions(false);
     setCurrentQuery('');
@@ -67,16 +77,6 @@ const WeatherWidget: React.FC = () => {
           {/* Panel del clima - Grid Area: weather */}
           <div style={{ gridArea: 'weather' }}>
             <div className="glass-effect" style={{ height: '100%', padding: '24px' }}>
-              {error && (
-                <Alert
-                  description={error}
-                  type="error"
-                  showIcon
-                  closable
-                  style={{ marginBottom: '16px' }}
-                />
-              )}
-
               <CurrentWeather />
             </div>
           </div>
