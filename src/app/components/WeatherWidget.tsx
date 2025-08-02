@@ -50,21 +50,12 @@ const WeatherWidget: React.FC = () => {
           
           {/* Barra de búsqueda - Grid Area: search */}
           <div style={{ gridArea: 'search' }}>
-            <div className="glass-effect" style={{ padding: '16px', position: 'relative' }}>
+            <div className="glass-effect search-panel" style={{ padding: '16px', position: 'relative' }}>
               <SearchBar
                 onSearch={handleSearch}
                 loading={isLoading}
                 placeholder="Buscar ciudad..."
               />
-              
-              {/* Sugerencias */}
-              {showSuggestions && currentQuery && (
-                <SearchSuggestions
-                  query={currentQuery}
-                  onSelectSuggestion={handleSelectSuggestion}
-                  visible={showSuggestions}
-                />
-              )}
             </div>
           </div>
 
@@ -125,9 +116,17 @@ const WeatherWidget: React.FC = () => {
               </p>
             </div>
           </div>
-
         </div>
       </div>
+
+      {/* SearchSuggestions fuera del contenedor para contexto de apilamiento independiente */}
+      {showSuggestions && currentQuery && (
+        <SearchSuggestions
+          query={currentQuery}
+          onSelectSuggestion={handleSelectSuggestion}
+          visible={showSuggestions}
+        />
+      )}
     </>
   );
 };

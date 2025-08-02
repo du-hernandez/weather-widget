@@ -1,10 +1,11 @@
 // Estilos globales
-@import './global.scss';
+@use './global.scss';
 
 // Estilos de componentes
-@import './components/weather-widget.scss';
-@import './components/search-panel.scss';
-@import './components/weather-panel.scss';
-@import './components/history-panel.scss';
-@import './components/map-placeholder.scss';
-@import './components/progress-bar.scss'; 
+@use './components/weather-widget.scss';
+@use './components/search-panel.scss';
+@use './components/search-suggestions.scss';
+@use './components/weather-panel.scss';
+@use './components/history-panel.scss';
+@use './components/map-placeholder.scss';
+@use './components/progress-bar.scss'; 
