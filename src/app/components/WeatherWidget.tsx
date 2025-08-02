@@ -69,7 +69,6 @@ const WeatherWidget: React.FC = () => {
             <div className="glass-effect" style={{ height: '100%', padding: '24px' }}>
               {error && (
                 <Alert
-                  message="Error"
                   description={error}
                   type="error"
                   showIcon

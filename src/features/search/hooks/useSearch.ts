@@ -12,18 +12,15 @@ import searchApiService from '../services/searchApi';
 import type { SearchApiParams, ReverseGeocodingParams } from '../services/searchApi';
 import type { SearchResult } from '../types';
 import type { AppError } from '@shared/services/error-handler';
+import { createQueryKeyFactory } from '@shared/utils/query-keys';
 
 // Extender el tipo Error para incluir appError
 interface ExtendedError extends Error {
   appError?: AppError;
 }
 
-// Query keys para cache
-export const searchKeys = {
-  all: ['search'] as const,
-  cities: (params: SearchApiParams) => [...searchKeys.all, 'cities', params] as const,
-  reverse: (params: ReverseGeocodingParams) => [...searchKeys.all, 'reverse', params] as const,
-};
+// Query keys para cache con serialización consistente
+export const searchKeys = createQueryKeyFactory(['search']);
 
 /**
  * Hook para buscar ciudades
@@ -32,7 +29,7 @@ export const useSearchCities = (params: SearchApiParams) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
-    queryKey: searchKeys.cities(params),
+    queryKey: searchKeys.search(params),
     queryFn: () => searchApiService.searchCities(params),
     enabled: params.q.length >= 2,
     staleTime: 0,
@@ -69,7 +66,7 @@ export const useCityByCoordinates = (params: ReverseGeocodingParams) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
-    queryKey: searchKeys.reverse(params),
+    queryKey: searchKeys.custom('reverse', params),
     queryFn: () => searchApiService.getCityByCoordinates(params),
     enabled: !!(params.lat && params.lon),
   });

@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useSearchCities } from './useSearch';
 import { selectRecentSearchHistory } from '../store/selectors';
 import { useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import { serializeParams } from '@shared/utils/query-keys';
 
 /**
  * Hook para sugerencias inteligentes con prioridad de historial
@@ -23,11 +24,16 @@ export const useSmartSuggestions = (query: string) => {
   });
 
   // Limpiar cache cuando cambia la query para forzar nueva búsqueda
-  React.useEffect(() => {
+  useEffect(() => {
     if (shouldSearchAPI) {
-      // Limpiar cache específico para esta query
+      // Limpiar cache específico para esta query usando la nueva serialización
+      // TODO: Implementar constante para el número de sugerencias y aplicarlo a toda la aplicación
+      const oldParams = { q: query, limit: 15 };
+      const serializedOldParams = serializeParams(oldParams);
+      const oldQueryKey = ['search', 'search', serializedOldParams];
+      
       queryClient.removeQueries({
-        queryKey: ['search', 'cities', { q: query, limit: 5 }], // Limpiar cache viejo
+        queryKey: oldQueryKey,
       });
     }
   }, [query, shouldSearchAPI, queryClient]);

@@ -11,19 +11,15 @@ import {
 } from '../store/weatherSlice';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';
 import type { AppError } from '@shared/services/error-handler';
+import { createQueryKeyFactory } from '@shared/utils/query-keys';
 
 // Extender el tipo Error para incluir appError
 interface ExtendedError extends Error {
   appError?: AppError;
 }
 
-// Query keys para cache
-export const weatherKeys = {
-  all: ['weather'] as const,
-  current: (params: WeatherApiParams) => [...weatherKeys.all, 'current', params] as const,
-  forecast: (params: WeatherApiParams) => [...weatherKeys.all, 'forecast', params] as const,
-  combined: (params: WeatherApiParams) => [...weatherKeys.all, 'combined', params] as const,
-};
+// Query keys para cache con serialización consistente
+export const weatherKeys = createQueryKeyFactory(['weather']);
 
 /**
  * Hook para obtener el clima actual
@@ -32,7 +28,7 @@ export const useCurrentWeather = (params: WeatherApiParams) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
-    queryKey: weatherKeys.current(params),
+    queryKey: weatherKeys.custom('current', params),
     queryFn: () => weatherApiService.getCurrentWeather(params),
     enabled: !!(params.q || (params.lat && params.lon)),
   });
@@ -68,7 +64,7 @@ export const useForecast = (params: WeatherApiParams) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
-    queryKey: weatherKeys.forecast(params),
+    queryKey: weatherKeys.custom('forecast', params),
     queryFn: () => weatherApiService.getForecast(params),
     enabled: !!(params.q || (params.lat && params.lon)),
   });
@@ -103,7 +99,7 @@ export const useWeatherAndForecast = (params: WeatherApiParams) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
-    queryKey: weatherKeys.combined(params),
+    queryKey: weatherKeys.custom('combined', params),
     queryFn: () => weatherApiService.getWeatherAndForecast(params),
     enabled: !!(params.q || (params.lat && params.lon)),
   });
