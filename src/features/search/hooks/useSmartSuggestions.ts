@@ -1,6 +1,6 @@
 import { useAppSelector } from '@shared/hooks/redux';
 import { useSearchCities } from './useSearch';
-import { selectRecentSearchHistory, selectCurrentQuery } from '../store/selectors';
+import { selectRecentSearchHistory } from '../store/selectors';
 
 
 /**

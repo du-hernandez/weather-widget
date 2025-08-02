@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Row, Col, Space, Alert } from 'antd';
+import { Alert } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useLoading } from '@shared/hooks/useLoading';
 import { selectSelectedCity, selectUnits } from '@features/weather/store/selectors';
@@ -10,8 +10,7 @@ import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
-
-const { Content } = Layout;
+import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -38,68 +37,84 @@ const WeatherWidget: React.FC = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh', background: '#f0f2f5' }}>
-      <Content style={{ padding: '24px' }}>
-        <Row justify="center">
-          <Col xs={24} sm={20} md={16} lg={12} xl={10}>
-            <Space direction="vertical" size="large" style={{ width: '100%' }}>
-              
-              {/* Título */}
-              <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                <h1 style={{ color: '#1890ff', margin: 0 }}>🌤️ Weather Widget</h1>
-                <p style={{ color: '#666', margin: '8px 0 0 0' }}>
-                  Busca una ciudad para ver el clima actual
-                </p>
-              </div>
+    <div className="weather-widget">
+      <div className="weather-widget__container">
+        
+        {/* Barra de búsqueda - Grid Area: search */}
+        <div style={{ gridArea: 'search' }}>
+          <div className="glass-effect" style={{ padding: '16px', position: 'relative' }}>
+            <SearchBar
+              onSearch={handleSearch}
+              loading={isLoading}
+              placeholder="Buscar ciudad..."
+            />
+            
+            {/* Sugerencias */}
+            {showSuggestions && currentQuery && (
+              <SearchSuggestions
+                query={currentQuery}
+                onSelectSuggestion={handleSelectSuggestion}
+                visible={showSuggestions}
+              />
+            )}
+          </div>
+        </div>
 
-              {/* Barra de búsqueda */}
-              <div style={{ position: 'relative' }}>
-                <SearchBar
-                  onSearch={handleSearch}
-                  loading={isLoading}
-                  placeholder="Buscar ciudad (ej: London, Madrid, Tokyo)..."
-                />
-                
-                {/* Sugerencias */}
-                {showSuggestions && currentQuery && (
-                  <SearchSuggestions
-                    query={currentQuery}
-                    onSelectSuggestion={handleSelectSuggestion}
-                    visible={showSuggestions}
-                  />
-                )}
-              </div>
+        {/* Panel del clima - Grid Area: weather */}
+        <div style={{ gridArea: 'weather' }}>
+          <div className="glass-effect" style={{ height: '100%', padding: '24px' }}>
+            {error && (
+              <Alert
+                message="Error"
+                description={error}
+                type="error"
+                showIcon
+                closable
+                style={{ marginBottom: '16px' }}
+              />
+            )}
 
-              {/* Error */}
-              {error && (
-                <Alert
-                  message="Error"
-                  description={error}
-                  type="error"
-                  showIcon
-                  closable
-                />
-              )}
+            {selectedCity && (
+              <Alert
+                message={`Ciudad seleccionada: ${selectedCity}`}
+                description={`Unidades: ${units === 'metric' ? 'Métrico (°C)' : 'Imperial (°F)'}`}
+                type="info"
+                showIcon
+                closable
+                style={{ marginBottom: '16px' }}
+              />
+            )}
 
-              {/* Información de estado */}
-              {selectedCity && (
-                <Alert
-                  message={`Ciudad seleccionada: ${selectedCity}`}
-                  description={`Unidades: ${units === 'metric' ? 'Métrico (°C)' : 'Imperial (°F)'}`}
-                  type="info"
-                  showIcon
-                  closable
-                />
-              )}
+            <CurrentWeather />
+          </div>
+        </div>
 
-              {/* Clima actual */}
-              <CurrentWeather />
+        {/* Panel histórico - Grid Area: history */}
+        <div style={{ gridArea: 'history' }}>
+          <div className="glass-effect" style={{ height: '100%', padding: '24px', minWidth: '280px' }}>
+            <h3 className="text-shadow" style={{ color: 'var(--text-primary)', marginBottom: '16px' }}>
+              Búsquedas recientes
+            </h3>
+            <p style={{ color: 'var(--text-secondary)' }}>
+              Historial de búsquedas aquí...
+            </p>
+          </div>
+        </div>
 
-            </Space>
-          </Col>
-        </Row>
-      </Content>
-    </Layout>
+        {/* Espacio para mapa - Grid Area: map */}
+        <div style={{ gridArea: 'map' }}>
+          <div className="glass-effect" style={{ height: '200px', padding: '24px' }}>
+            <h3 className="text-shadow" style={{ color: 'var(--text-primary)', marginBottom: '16px' }}>
+              Mapa
+            </h3>
+            <p style={{ color: 'var(--text-secondary)' }}>
+              Espacio reservado para implementación del mapa...
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
   );
 };
 

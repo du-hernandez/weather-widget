@@ -1,0 +1,51 @@
+.weather-widget {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 
+    "search search"
+    "weather history"
+    "map map";
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+
+  // // Overlay sutil para mejorar legibilidad
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background: rgba(0, 0, 0, 0.2);
+  //   z-index: 1;
+  // }
+
+  // Contenedor principal
+  .weather-widget__container {
+    position: relative;
+    z-index: 2;
+    display: contents;
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "search"
+      "weather"
+      "history"
+      "map";
+    gap: 12px;
+    padding: 12px;
+  }
+} 
