@@ -5,6 +5,7 @@ import { SearchOutlined, HistoryOutlined, ClearOutlined } from '@ant-design/icon
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { setCurrentQuery, clearSearch } from '../store/searchSlice';
 import { selectCurrentQuery, selectHasSearchHistory } from '../store/selectors';
+import { useDebounce } from '@shared/hooks/useDebounce';
 
 
 const { Search } = Input;
@@ -29,12 +30,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
   
   
   const [inputValue, setInputValue] = useState(currentQuery);
+  
+  // Implementar debounce para optimizar las búsquedas
+  const debouncedInputValue = useDebounce(inputValue, 300);
 
   useEffect(() => {
-    if (inputValue !== '') {
-      handleSearch(inputValue);
+    if (debouncedInputValue !== '') {
+      handleSearch(debouncedInputValue);
     }
-  }, [inputValue]);
+  }, [debouncedInputValue]);
 
   const handleSearch = (value: string) => {
     if (value.trim()) {
