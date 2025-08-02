@@ -24,7 +24,7 @@ const CurrentWeather: React.FC = () => {
 
   if (!currentWeather || !temperature) {
     return (
-      <div className="weather-panel">
+      <div className="weather-panel glass-effect">
         <div className="current-weather">
           <div style={{ textAlign: 'center', padding: '40px 20px' }}>
             <Text style={{ color: 'var(--text-secondary)' }}>
@@ -39,7 +39,7 @@ const CurrentWeather: React.FC = () => {
   const formattedDescription = capitalizeWords(description);
 
   return (
-    <div className="weather-panel">
+    <div className="weather-panel glass-effect">
       <div className="current-weather">
         
         <WeatherHeader 

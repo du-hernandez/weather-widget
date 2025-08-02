@@ -27,7 +27,6 @@ const weatherSlice = createSlice({
     },
     setCurrentWeather: (state, action: PayloadAction<WeatherData>) => {
       state.currentWeather = action.payload;
-      state.selectedCity = action.payload.name;
       state.isLoading = false;
       state.error = null;
     },

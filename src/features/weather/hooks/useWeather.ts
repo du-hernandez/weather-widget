@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '@shared/hooks/redux';
+import { useAppSelector } from '@shared/hooks/redux';
 import { 
   setLoading, 
   setError, 
@@ -9,6 +10,7 @@ import {
   setSelectedCity,
   clearWeather 
 } from '../store/weatherSlice';
+import { selectSelectedCity } from '../store/selectors';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';
 import type { AppError } from '@shared/services/error-handler';
 import { createQueryKeyFactory } from '@shared/utils/query-keys';
@@ -26,6 +28,7 @@ export const weatherKeys = createQueryKeyFactory(['weather']);
  */
 export const useCurrentWeather = (params: WeatherApiParams) => {
   const dispatch = useAppDispatch();
+  const currentSelectedCity = useAppSelector(selectSelectedCity);
 
   const query = useQuery({
     queryKey: weatherKeys.custom('current', params),
@@ -37,9 +40,14 @@ export const useCurrentWeather = (params: WeatherApiParams) => {
   useEffect(() => {
     if (query.data) {
       dispatch(setCurrentWeather(query.data));
-      dispatch(setSelectedCity(query.data.name));
+      
+      // Solo actualizar selectedCity si es diferente o si no hay ciudad seleccionada
+      // Esto evita que se actualice con solo el nombre cuando ya tenemos city,country
+      if (!currentSelectedCity || (params.q && params.q !== currentSelectedCity)) {
+        dispatch(setSelectedCity(params.q || query.data.name));
+      }
     }
-  }, [query.data, dispatch]);
+  }, [query.data, dispatch, currentSelectedCity, params.q]);
 
   useEffect(() => {
     if (query.error) {
@@ -100,11 +108,12 @@ export const useWeatherAndForecast = (
   onSuccess?: () => void
 ) => {
   const dispatch = useAppDispatch();
+  const currentSelectedCity = useAppSelector(selectSelectedCity);
 
   const query = useQuery({
     queryKey: weatherKeys.custom('combined', params),
     queryFn: () => weatherApiService.getWeatherAndForecast(params),
-    enabled: !!(params.q || (params.lat && params.lon)),
+    enabled: !!(params.q && params.q.trim() !== '') || !!(params.lat && params.lon),
   });
 
   // Efectos para manejar el estado de Redux
@@ -112,14 +121,19 @@ export const useWeatherAndForecast = (
     if (query.data) {
       dispatch(setCurrentWeather(query.data.currentWeather));
       dispatch(setForecast(query.data.forecast));
-      dispatch(setSelectedCity(query.data.currentWeather.name));
+      
+      // Solo actualizar selectedCity si es diferente o si no hay ciudad seleccionada
+      // Esto evita que se actualice con solo el nombre cuando ya tenemos city,country
+      if (!currentSelectedCity || (params.q && params.q !== currentSelectedCity)) {
+        dispatch(setSelectedCity(params.q || query.data.currentWeather.name));
+      }
       
       // Ejecutar callback de éxito si está definido
       if (onSuccess) {
         onSuccess();
       }
     }
-  }, [query.data, dispatch, onSuccess]);
+  }, [query.data, dispatch, onSuccess, currentSelectedCity, params.q]);
 
   useEffect(() => {
     if (query.error) {

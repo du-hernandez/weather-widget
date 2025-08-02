@@ -14,10 +14,10 @@
   min-height: 0; // Importante para flexbox
   height: 56vh;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glass-shadow-hover);
-  }
+  // &:hover {
+  //   transform: translateY(-2px);
+  //   box-shadow: var(--glass-shadow-hover);
+  // }
 
   .recent-searches-header {
     display: flex;

@@ -13,6 +13,7 @@ import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
 import { useLastUpdateTime } from '@shared/hooks/useLastUpdateTime';
+import { setCurrentQuery as setCurrentQuerySearch} from '@/features/search/store/searchSlice';
 import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
@@ -28,10 +29,15 @@ const WeatherWidget: React.FC = () => {
 
   const [messageApi, contextHolder] = message.useMessage();
 
+  // Memoizar los parámetros del hook para evitar re-ejecuciones innecesarias
+  const weatherParams = useMemo(() => ({ 
+    q: selectedCity || '' 
+  }), [selectedCity]);
+
   // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
   // Solo actualiza lastUpdateTime cuando se obtienen los datos exitosamente
   useWeatherAndForecast(
-    { q: selectedCity || '' },
+    weatherParams,
     updateLastUpdateTime // Callback que se ejecuta solo cuando se obtienen los datos
   );
 
@@ -66,7 +72,6 @@ const WeatherWidget: React.FC = () => {
     dispatch(setSelectedCity(preciseSearch));
     
     setShowSuggestions(false);
-    // setCurrentQuery('');
   }, [dispatch]);
 
   // Handlers para el foco del SearchBar
@@ -78,14 +83,12 @@ const WeatherWidget: React.FC = () => {
     }
     
     // Mostrar sugerencias si hay query
-    console.log('SearchBar tomó el foco');
     if (currentQuery.trim().length >= 2) {
       setShowSuggestions(true);
     }
   }, [currentQuery]);
 
   const handleBlur = useCallback(() => {
-    console.log('SearchBar perdió el foco');
     
     // Limpiar timeout anterior si existe
     if (hideTimeoutRef.current) {
@@ -111,8 +114,8 @@ const WeatherWidget: React.FC = () => {
   // Handler para seleccionar búsqueda del historial
   const handleHistorySearch = useCallback((city: string, country: string) => {
     const preciseSearch = `${city},${country}`;
-    console.log('handleHistorySearch', preciseSearch);
     dispatch(setSelectedCity(preciseSearch));
+    dispatch(setCurrentQuerySearch(city));
   }, [dispatch]);
 
   // Handler para limpiar historial
@@ -168,9 +171,7 @@ const WeatherWidget: React.FC = () => {
 
           {/* Panel del clima - Grid Area: weather */}
           <div style={{ gridArea: 'weather' }}>
-            <div className="glass-effect" style={{ height: '100%', padding: '24px' }}>
               <CurrentWeather />
-            </div>
           </div>
 
           {/* Panel histórico - Grid Area: history */}
