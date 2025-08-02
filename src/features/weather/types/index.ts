@@ -1,4 +1,4 @@
-import type { LoadingState } from '../../../shared/types';
+import type { LoadingState } from '@shared/types';
 
 export interface WeatherData {
   coord: {

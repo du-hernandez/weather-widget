@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import type { RootState } from '../../../app/store';
+import type { RootState } from '@app/store';
 
 // Selectores básicos
 export const selectSearchState = (state: RootState) => state.search;

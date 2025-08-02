@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAppSelector } from '../../shared/hooks/redux';
-import { selectSelectedCity, selectUnits } from '../../features/weather/store/selectors';
+import { useAppSelector } from '@shared/hooks/redux';
+import { selectSelectedCity, selectUnits } from '@features/weather/store/selectors';
 
 const WeatherWidget: React.FC = () => {
   const selectedCity = useAppSelector(selectSelectedCity);

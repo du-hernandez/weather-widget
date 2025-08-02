@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import weatherReducer from '../../features/weather/store/weatherSlice';
-import searchReducer from '../../features/search/store/searchSlice';
+import weatherReducer from '@features/weather/store/weatherSlice';
+import searchReducer from '@features/search/store/searchSlice';
 import type { RootState } from './types';
 
 export const store = configureStore({
