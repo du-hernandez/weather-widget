@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useWeatherLoading } from '@shared/hooks/useLoading';
 import { selectSelectedCity } from '@features/weather/store/selectors';
@@ -8,9 +9,8 @@ import CurrentWeather from '@features/weather/components/CurrentWeather';
 import ProgressBar from '@app/components/ProgressBar';
 import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
-import { setSelectedCity } from '@features/weather/store/weatherSlice';
+import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
-import { useErrorMessage } from '@shared/hooks/useErrorMessage';
 import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
@@ -21,11 +21,20 @@ const WeatherWidget: React.FC = () => {
   const [currentQuery, setCurrentQuery] = useState('');
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
   useWeatherAndForecast({ q: selectedCity || '' });
 
-  // Hook para mostrar mensajes de error flotantes
-  useErrorMessage(error);
+  useEffect(() => {
+    if (error) {
+      messageApi.warning(error);
+      
+      setTimeout(() => {
+        dispatch(setError(''));
+      }, 1000);
+    }
+  }, [error, dispatch]);
 
   const handleSearch = (query: string) => {
     setCurrentQuery(query);
@@ -52,6 +61,7 @@ const WeatherWidget: React.FC = () => {
 
   return (
     <>
+      {contextHolder}
       {/* Fondo que cubre toda la pantalla */}
       <div className="weather-widget-background" />
       

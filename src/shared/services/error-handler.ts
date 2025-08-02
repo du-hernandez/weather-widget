@@ -58,7 +58,7 @@ class ErrorHandlerService {
       case 404:
         return {
           type: ErrorType.CITY_NOT_FOUND,
-          message: 'Ciudad no encontrada.',
+          message: 'No se encontraron datos para esta ciudad',
           originalError: error,
           statusCode,
         };
