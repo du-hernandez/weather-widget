@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Space, Typography } from 'antd';
+import { List, Avatar, Space, Typography, Alert } from 'antd';
 import { EnvironmentOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useSmartSuggestions } from '../hooks/useSmartSuggestions';
 import { useHistoryManagement } from '../hooks/useHistoryManagement';
@@ -21,8 +21,23 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   const { suggestions, isLoading, hasApiResults } = useSmartSuggestions(query);
   const { addCityToHistory } = useHistoryManagement();
 
-  if (!visible || (!isLoading && suggestions.length === 0)) {
+  if (!visible) {
     return null;
+  }
+
+  // Mostrar mensaje cuando no hay resultados y no está cargando
+  if (!isLoading && suggestions.length === 0 && query.length >= 2) {
+    return (
+      <div style={{ marginTop: 8 }}>
+        <Alert
+          // message="No se encontraron ciudades"
+          description={`No encontramos ciudades.`}
+          type="warning"
+          showIcon
+          style={{ borderRadius: 6 }}
+        />
+      </div>
+    );
   }
 
   const handleSuggestionClick = (suggestion: SearchResult) => {

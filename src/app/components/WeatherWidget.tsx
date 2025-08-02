@@ -70,23 +70,23 @@ const WeatherWidget: React.FC = () => {
                 )}
               </div>
 
-              {/* Información de estado */}
-              {selectedCity && (
-                <Alert
-                  message={`Ciudad seleccionada: ${selectedCity}`}
-                  description={`Unidades: ${units === 'metric' ? 'Métrico (°C)' : 'Imperial (°F)'}`}
-                  type="info"
-                  showIcon
-                  closable
-                />
-              )}
-
               {/* Error */}
               {error && (
                 <Alert
                   message="Error"
                   description={error}
                   type="error"
+                  showIcon
+                  closable
+                />
+              )}
+
+              {/* Información de estado */}
+              {selectedCity && (
+                <Alert
+                  message={`Ciudad seleccionada: ${selectedCity}`}
+                  description={`Unidades: ${units === 'metric' ? 'Métrico (°C)' : 'Imperial (°F)'}`}
+                  type="info"
                   showIcon
                   closable
                 />
