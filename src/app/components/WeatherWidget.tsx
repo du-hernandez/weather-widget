@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { message } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useWeatherLoading } from '@shared/hooks/useLoading';
@@ -6,11 +6,12 @@ import { selectSelectedCity } from '@features/weather/store/selectors';
 import SearchBar from '@features/search/components/SearchBar';
 import SearchSuggestions from '@features/search/components/SearchSuggestions';
 import CurrentWeather from '@features/weather/components/CurrentWeather';
-import ProgressBar from '@app/components/ProgressBar';
+import ProgressBarWrapper from '@app/components/ProgressBarWrapper';
 import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
+import { useLastUpdateTime } from '@shared/hooks/useLastUpdateTime';
 import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
@@ -19,13 +20,20 @@ const WeatherWidget: React.FC = () => {
   const { isLoading, error } = useWeatherLoading();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
-  const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
+  
+  // Hook personalizado para manejar lastUpdateTime
+  const { lastUpdateTime, hasInitialData, updateLastUpdateTime } = useLastUpdateTime();
 
   const [messageApi, contextHolder] = message.useMessage();
 
   // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
-  useWeatherAndForecast({ q: selectedCity || '' });
+  // Solo actualiza lastUpdateTime cuando se obtienen los datos exitosamente
+  useWeatherAndForecast(
+    { q: selectedCity || '' },
+    updateLastUpdateTime // Callback que se ejecuta solo cuando se obtienen los datos
+  );
 
+  // Manejo de errores con limpieza automática en Redux
   useEffect(() => {
     if (error) {
       messageApi.warning(error);
@@ -36,12 +44,13 @@ const WeatherWidget: React.FC = () => {
     }
   }, [error, dispatch]);
 
-  const handleSearch = (query: string) => {
+  // Memoizar handlers para evitar re-renders
+  const handleSearch = useCallback((query: string) => {
     setCurrentQuery(query);
     setShowSuggestions(true);
-  };
+  }, []);
 
-  const handleSelectSuggestion = (suggestion: SearchResult) => {
+  const handleSelectSuggestion = useCallback((suggestion: SearchResult) => {
     // Usar el nombre más apropiado para la búsqueda
     // Preferir el nombre local en español si está disponible, sino usar el nombre principal
     const cityName = suggestion.local_names?.es || 
@@ -56,8 +65,22 @@ const WeatherWidget: React.FC = () => {
     
     setShowSuggestions(false);
     setCurrentQuery('');
-    setLastUpdateTime(new Date()); // Actualizar tiempo cuando se selecciona nueva ciudad
-  };
+    // ❌ REMOVIDO: setLastUpdateTime(new Date()) - ahora se ejecuta solo cuando se obtienen los datos
+  }, [dispatch]);
+
+  // Memoizar props del SearchBar
+  const searchBarProps = useMemo(() => ({
+    onSearch: handleSearch,
+    loading: isLoading,
+    placeholder: "Buscar ciudad..."
+  }), [handleSearch, isLoading]);
+
+  // Memoizar props del SearchSuggestions
+  const searchSuggestionsProps = useMemo(() => ({
+    query: currentQuery,
+    onSelectSuggestion: handleSelectSuggestion,
+    visible: showSuggestions
+  }), [currentQuery, handleSelectSuggestion, showSuggestions]);
 
   return (
     <>
@@ -72,18 +95,15 @@ const WeatherWidget: React.FC = () => {
           {/* Barra de búsqueda - Grid Area: search */}
           <div style={{ gridArea: 'search' }}>
             <div className="glass-effect search-panel" style={{ padding: '16px', position: 'relative' }}>
-              <SearchBar
-                onSearch={handleSearch}
-                loading={isLoading}
-                placeholder="Buscar ciudad..."
-              />
+              <SearchBar {...searchBarProps} />
             </div>
           </div>
 
-          {/* Barra de progreso - Grid Area: progress */}
-          <div style={{ gridArea: 'progress' }}>
-            <ProgressBar lastUpdateTime={lastUpdateTime} maxTime={10} />
-          </div>
+          {/* Barra de progreso optimizada - Grid Area: progress */}
+          <ProgressBarWrapper 
+            lastUpdateTime={lastUpdateTime} 
+            hasInitialData={hasInitialData}
+          />
 
           {/* Panel del clima - Grid Area: weather */}
           <div style={{ gridArea: 'weather' }}>
@@ -120,11 +140,7 @@ const WeatherWidget: React.FC = () => {
 
       {/* SearchSuggestions fuera del contenedor para contexto de apilamiento independiente */}
       {showSuggestions && currentQuery && (
-        <SearchSuggestions
-          query={currentQuery}
-          onSelectSuggestion={handleSelectSuggestion}
-          visible={showSuggestions}
-        />
+        <SearchSuggestions {...searchSuggestionsProps} />
       )}
     </>
   );

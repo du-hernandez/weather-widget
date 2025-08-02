@@ -95,7 +95,10 @@ export const useForecast = (params: WeatherApiParams) => {
 /**
  * Hook para obtener clima y pronóstico en paralelo
  */
-export const useWeatherAndForecast = (params: WeatherApiParams) => {
+export const useWeatherAndForecast = (
+  params: WeatherApiParams, 
+  onSuccess?: () => void
+) => {
   const dispatch = useAppDispatch();
 
   const query = useQuery({
@@ -110,8 +113,13 @@ export const useWeatherAndForecast = (params: WeatherApiParams) => {
       dispatch(setCurrentWeather(query.data.currentWeather));
       dispatch(setForecast(query.data.forecast));
       dispatch(setSelectedCity(query.data.currentWeather.name));
+      
+      // Ejecutar callback de éxito si está definido
+      if (onSuccess) {
+        onSuccess();
+      }
     }
-  }, [query.data, dispatch]);
+  }, [query.data, dispatch, onSuccess]);
 
   useEffect(() => {
     if (query.error) {
