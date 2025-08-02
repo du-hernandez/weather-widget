@@ -11,6 +11,12 @@ import {
 import searchApiService from '../services/searchApi';
 import type { SearchApiParams, ReverseGeocodingParams } from '../services/searchApi';
 import type { SearchResult } from '../types';
+import type { AppError } from '@shared/services/error-handler';
+
+// Extender el tipo Error para incluir appError
+interface ExtendedError extends Error {
+  appError?: AppError;
+}
 
 // Query keys para cache
 export const searchKeys = {
@@ -28,10 +34,10 @@ export const useSearchCities = (params: SearchApiParams) => {
   const query = useQuery({
     queryKey: searchKeys.cities(params),
     queryFn: () => searchApiService.searchCities(params),
-    enabled: params.q.length >= 2, // Solo buscar si hay al menos 2 caracteres
-    staleTime: 0, // Los datos se consideran obsoletos inmediatamente
-    gcTime: 0, // No cachear los datos (antes era cacheTime)
-    refetchOnWindowFocus: false, // No refetch al enfocar la ventana
+    enabled: params.q.length >= 2,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnWindowFocus: false,
   });
 
   // Efectos para manejar el estado de Redux
@@ -43,7 +49,9 @@ export const useSearchCities = (params: SearchApiParams) => {
 
   useEffect(() => {
     if (query.error) {
-      dispatch(setError(query.error.message));
+      const extendedError = query.error as ExtendedError;
+      const errorMessage = extendedError.appError?.message || query.error.message;
+      dispatch(setError(errorMessage));
     }
   }, [query.error, dispatch]);
 
@@ -55,7 +63,7 @@ export const useSearchCities = (params: SearchApiParams) => {
 };
 
 /**
- * Hook para obtener ciudad por coordenadas
+ * Hook para obtener ciudad por coordenadas (reverse geocoding)
  */
 export const useCityByCoordinates = (params: ReverseGeocodingParams) => {
   const dispatch = useAppDispatch();
@@ -70,14 +78,15 @@ export const useCityByCoordinates = (params: ReverseGeocodingParams) => {
   useEffect(() => {
     if (query.data && query.data.length > 0) {
       dispatch(setSearchResults(query.data));
-      // Agregar al historial automáticamente
       dispatch(addToHistory(query.data[0]));
     }
   }, [query.data, dispatch]);
 
   useEffect(() => {
     if (query.error) {
-      dispatch(setError(query.error.message));
+      const extendedError = query.error as ExtendedError;
+      const errorMessage = extendedError.appError?.message || query.error.message;
+      dispatch(setError(errorMessage));
     }
   }, [query.error, dispatch]);
 

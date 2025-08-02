@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosResponse } from 'axios';
+import errorHandler from './error-handler';
 
 // Cliente HTTP base usando Axios
 class HttpClient {
@@ -26,12 +27,26 @@ class HttpClient {
       return config;
     });
 
-    // Interceptor para manejar errores
+    // Interceptor para manejar errores con mensajes amigables
     this.client.interceptors.response.use(
       (response: AxiosResponse) => response,
       (error) => {
-        console.error('API Error:', error);
-        return Promise.reject(error);
+        // Usar el manejador de errores centralizado
+        const appError = errorHandler.handleError(error);
+        
+        // Log del error original para debugging
+        console.error('API Error:', {
+          type: appError.type,
+          message: appError.message,
+          statusCode: appError.statusCode,
+          originalError: error,
+        });
+
+        // Rechazar con el error procesado
+        return Promise.reject({
+          ...error,
+          appError, // Agregar el error procesado
+        });
       }
     );
   }
@@ -42,6 +57,20 @@ class HttpClient {
 
   public post<T>(url: string, data?: any, params?: Record<string, any>): Promise<AxiosResponse<T>> {
     return this.client.post<T>(url, data, { params });
+  }
+
+  /**
+   * Método helper para obtener mensaje de error amigable
+   */
+  public getErrorMessage(error: any): string {
+    return errorHandler.getErrorMessage(error);
+  }
+
+  /**
+   * Método helper para obtener tipo de error
+   */
+  public getErrorType(error: any): string {
+    return errorHandler.getErrorType(error);
   }
 }
 

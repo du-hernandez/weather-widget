@@ -35,7 +35,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
         });
       }
     }
-  }, [visible, suggestions]);
+  }, [visible]);
 
   if (!visible || query.length < 2) {
     return null;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useLoading } from '@shared/hooks/useLoading';
-import { selectSelectedCity, selectUnits } from '@features/weather/store/selectors';
+import { selectSelectedCity } from '@features/weather/store/selectors';
 import SearchBar from '@features/search/components/SearchBar';
 import SearchSuggestions from '@features/search/components/SearchSuggestions';
 import CurrentWeather from '@features/weather/components/CurrentWeather';
@@ -16,19 +16,19 @@ import '@app/styles/index.scss';
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector(selectSelectedCity);
-  const units = useAppSelector(selectUnits);
   const { isLoading, error } = useLoading();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
 
   // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
-  useWeatherAndForecast({ q: selectedCity || '' });
-
+  
   const handleSearch = (query: string) => {
     setCurrentQuery(query);
     setShowSuggestions(true);
   };
+
+  useWeatherAndForecast({ q: selectedCity || '' });
 
   const handleSelectSuggestion = (suggestion: SearchResult) => {
     // Actualizar la ciudad seleccionada en Redux
@@ -37,18 +37,6 @@ const WeatherWidget: React.FC = () => {
     setShowSuggestions(false);
     setCurrentQuery('');
     setLastUpdateTime(new Date()); // Actualizar tiempo cuando se selecciona nueva ciudad
-  };
-
-  const handleSearchFocus = () => {
-    if (currentQuery && currentQuery.length >= 2) {
-      setShowSuggestions(true);
-    }
-  };
-
-  const handleSearchBlur = () => {
-    setTimeout(() => {
-      setShowSuggestions(false);
-    }, 200);
   };
 
   return (
@@ -65,8 +53,6 @@ const WeatherWidget: React.FC = () => {
             <div className="glass-effect search-panel" style={{ padding: '16px', position: 'relative' }}>
               <SearchBar
                 onSearch={handleSearch}
-                onFocus={handleSearchFocus}
-                onBlur={handleSearchBlur}
                 loading={isLoading}
                 placeholder="Buscar ciudad..."
               />
@@ -75,7 +61,7 @@ const WeatherWidget: React.FC = () => {
 
           {/* Barra de progreso - Grid Area: progress */}
           <div style={{ gridArea: 'progress' }}>
-            <ProgressBar lastUpdateTime={lastUpdateTime} maxTime={60} />
+            <ProgressBar lastUpdateTime={lastUpdateTime} maxTime={10} />
           </div>
 
           {/* Panel del clima - Grid Area: weather */}
@@ -86,17 +72,6 @@ const WeatherWidget: React.FC = () => {
                   message="Error"
                   description={error}
                   type="error"
-                  showIcon
-                  closable
-                  style={{ marginBottom: '16px' }}
-                />
-              )}
-
-              {selectedCity && (
-                <Alert
-                  message={`Ciudad seleccionada: ${selectedCity}`}
-                  description={`Unidades: ${units === 'metric' ? 'Métrico (°C)' : 'Imperial (°F)'}`}
-                  type="info"
                   showIcon
                   closable
                   style={{ marginBottom: '16px' }}

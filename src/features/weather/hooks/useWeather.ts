@@ -10,6 +10,12 @@ import {
   clearWeather 
 } from '../store/weatherSlice';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';
+import type { AppError } from '@shared/services/error-handler';
+
+// Extender el tipo Error para incluir appError
+interface ExtendedError extends Error {
+  appError?: AppError;
+}
 
 // Query keys para cache
 export const weatherKeys = {
@@ -41,7 +47,10 @@ export const useCurrentWeather = (params: WeatherApiParams) => {
 
   useEffect(() => {
     if (query.error) {
-      dispatch(setError(query.error.message));
+      // Usar el mensaje de error amigable del error procesado
+      const extendedError = query.error as ExtendedError;
+      const errorMessage = extendedError.appError?.message || query.error.message;
+      dispatch(setError(errorMessage));
     }
   }, [query.error, dispatch]);
 
@@ -73,7 +82,10 @@ export const useForecast = (params: WeatherApiParams) => {
 
   useEffect(() => {
     if (query.error) {
-      dispatch(setError(query.error.message));
+      // Usar el mensaje de error amigable del error procesado
+      const extendedError = query.error as ExtendedError;
+      const errorMessage = extendedError.appError?.message || query.error.message;
+      dispatch(setError(errorMessage));
     }
   }, [query.error, dispatch]);
 
@@ -107,7 +119,10 @@ export const useWeatherAndForecast = (params: WeatherApiParams) => {
 
   useEffect(() => {
     if (query.error) {
-      dispatch(setError(query.error.message));
+      // Usar el mensaje de error amigable del error procesado
+      const extendedError = query.error as ExtendedError;
+      const errorMessage = extendedError.appError?.message || query.error.message;
+      dispatch(setError(errorMessage));
     }
   }, [query.error, dispatch]);
 
