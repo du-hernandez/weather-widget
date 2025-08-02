@@ -59,9 +59,10 @@ export const useProgressBar = ({ lastUpdateTime, maxTime, hasInitialData }: UseP
   }, []);
 
   // Efecto para actualizar el tiempo cada segundo (solo si hay datos iniciales)
+  // TODO: Definir una constante para el intervalo de actualización
   useEffect(() => {
     if (shouldAnimate) {
-      const interval = setInterval(updateCurrentTime, 1000);
+      const interval = setInterval(updateCurrentTime, 5000);
       return () => clearInterval(interval);
     }
   }, [updateCurrentTime, shouldAnimate]);
