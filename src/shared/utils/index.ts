@@ -38,4 +38,30 @@ export const capitalizeWords = (text: string): string => {
  */
 export const isValidCoordinate = (lat: number, lon: number): boolean => {
   return lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+};
+
+/**
+ * Limpia el nombre de una ciudad para la API del clima
+ * - Elimina preposiciones y artículos
+ * - Limita a máximo dos palabras
+ * - Mantiene el formato city,countryCode
+ */
+export const cleanCityNameForWeatherAPI = (cityName: string, countryCode: string): string => {
+  // Lista de palabras a eliminar (preposiciones, artículos, etc.)
+  const wordsToRemove = [
+    'de', 'del', 'la', 'las', 'el', 'los', 'da', 'das', 'do', 'dos',
+    'di', 'du', 'van', 'von', 'der', 'den', 'dem', 'des', 'le', 'les',
+    'of', 'the', 'and', 'y', 'e', 'o', 'ou', 'et', 'und', 'och'
+  ];
+
+  // Dividir el nombre en palabras y filtrar las que no están en la lista de eliminación
+  const words = cityName
+    .split(' ')
+    .filter(word => !wordsToRemove.includes(word.toLowerCase()))
+    .slice(0, 2); // Tomar solo las primeras dos palabras
+
+  // Unir las palabras y agregar el código de país
+  const cleanedCityName = words.join(' ');
+  
+  return `${cleanedCityName},${countryCode}`;
 }; 

@@ -3,6 +3,7 @@ import { useCityByCoordinates } from '@features/search/hooks/useSearch';
 import { setSelectedLocation, setLoading, setError } from '../store/mapSlice';
 import { addToHistory } from '@features/search/store/searchSlice';
 import { setSelectedCity } from '@features/weather/store/weatherSlice';
+import { cleanCityNameForWeatherAPI } from '@shared/utils';
 import type { SelectedLocation } from '../types';
 
 /**
@@ -46,7 +47,7 @@ export const useMapSelection = () => {
         dispatch(addToHistory(city));
         
         // Actualizar la ciudad seleccionada para que useWeatherAndForecast se ejecute automáticamente
-        const preciseSearch = `${city.name},${city.country}`;
+        const preciseSearch = cleanCityNameForWeatherAPI(city.name, city.country);
         dispatch(setSelectedCity(preciseSearch));
       }
 

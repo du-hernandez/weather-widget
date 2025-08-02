@@ -28,6 +28,7 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
   };
 
   const handleClearHistory = () => {
+    console.log('🔄 Llamando a onClearHistory');
     if (onClearHistory) {
       onClearHistory();
     }

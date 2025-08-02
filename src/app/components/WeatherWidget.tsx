@@ -13,7 +13,8 @@ import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
 import { useLastUpdateTime } from '@shared/hooks/useLastUpdateTime';
-import { setCurrentQuery as setCurrentQuerySearch} from '@/features/search/store/searchSlice';
+import { setCurrentQuery as setCurrentQuerySearch, clearHistory } from '@/features/search/store/searchSlice';
+import { cleanCityNameForWeatherAPI } from '@shared/utils';
 import '@app/styles/index.scss';
 
 const WeatherWidget: React.FC = () => {
@@ -65,8 +66,8 @@ const WeatherWidget: React.FC = () => {
                      suggestion.local_names?.en || 
                      suggestion.name;
     
-    // Crear búsqueda precisa con ciudad y código de país
-    const preciseSearch = `${cityName},${suggestion.country}`;
+    // Crear búsqueda precisa con ciudad limpia y código de país
+    const preciseSearch = cleanCityNameForWeatherAPI(cityName, suggestion.country);
     
     // Actualizar la ciudad seleccionada en Redux con búsqueda precisa
     dispatch(setSelectedCity(preciseSearch));
@@ -113,16 +114,15 @@ const WeatherWidget: React.FC = () => {
 
   // Handler para seleccionar búsqueda del historial
   const handleHistorySearch = useCallback((city: string, country: string) => {
-    const preciseSearch = `${city},${country}`;
+    const preciseSearch = cleanCityNameForWeatherAPI(city, country);
     dispatch(setSelectedCity(preciseSearch));
-    dispatch(setCurrentQuerySearch(city));
+    // dispatch(setCurrentQuerySearch(city));
   }, [dispatch]);
 
   // Handler para limpiar historial
   const handleClearHistory = useCallback(() => {
-    // TODO: Implementar limpieza de historial
-    console.log('Limpiar historial');
-  }, []);
+    dispatch(clearHistory());
+  }, [dispatch, messageApi]);
 
   // Memoizar props del SearchBar
   const searchBarProps = useMemo(() => ({
