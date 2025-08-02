@@ -39,6 +39,18 @@ const WeatherWidget: React.FC = () => {
     setLastUpdateTime(new Date()); // Actualizar tiempo cuando se selecciona nueva ciudad
   };
 
+  const handleSearchFocus = () => {
+    if (currentQuery && currentQuery.length >= 2) {
+      setShowSuggestions(true);
+    }
+  };
+
+  const handleSearchBlur = () => {
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 200);
+  };
+
   return (
     <>
       {/* Fondo que cubre toda la pantalla */}
@@ -53,6 +65,8 @@ const WeatherWidget: React.FC = () => {
             <div className="glass-effect search-panel" style={{ padding: '16px', position: 'relative' }}>
               <SearchBar
                 onSearch={handleSearch}
+                onFocus={handleSearchFocus}
+                onBlur={handleSearchBlur}
                 loading={isLoading}
                 placeholder="Buscar ciudad..."
               />

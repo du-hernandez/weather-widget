@@ -13,12 +13,16 @@ interface SearchBarProps {
   onShowHistory?: () => void;
   placeholder?: string;
   loading?: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   placeholder = 'Buscar ciudad...',
   loading = false,
+  onFocus,
+  onBlur,
 }) => {
   const dispatch = useAppDispatch();
   const currentQuery = useAppSelector(selectCurrentQuery);
@@ -43,12 +47,24 @@ const SearchBar: React.FC<SearchBarProps> = ({
     }
   };
 
+  const handleFocus = () => {
+    console.log('SearchBar tomó el foco');
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    console.log('SearchBar perdió el foco');
+    onBlur?.();
+  };
+
   return (
     <Space.Compact style={{ width: '100%' }}>
       <Search
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         loading={loading}
         allowClear
         style={{ flex: 1 }}
