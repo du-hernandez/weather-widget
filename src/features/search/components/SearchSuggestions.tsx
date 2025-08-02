@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { EnvironmentOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useSmartSuggestions } from '../hooks/useSmartSuggestions';
 import { useHistoryManagement } from '../hooks/useHistoryManagement';
@@ -18,6 +18,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   const { suggestions, isLoading, hasApiResults } = useSmartSuggestions(query);
   const { addCityToHistory } = useHistoryManagement();
   const [overlayStyle, setOverlayStyle] = useState<React.CSSProperties>({});
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (visible) {
@@ -46,12 +47,20 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
     onSelectSuggestion(suggestion);
   };
 
+  const handleMouseEnter = () => {
+  };
+
+  const handleMouseLeave = () => {
+  };
+
   const renderSuggestionItem = (item: SearchResult, index: number) => {
     return (
       <div
         key={`${item.name}-${item.country}-${index}`}
         className="suggestion-item"
         onClick={() => handleSuggestionClick(item)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="suggestion-content">
           <div className="suggestion-avatar">
@@ -73,7 +82,13 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
   };
 
   return (
-    <div className="search-suggestions-overlay" style={overlayStyle}>
+    <div 
+      className="search-suggestions-overlay" 
+      style={overlayStyle}
+      ref={suggestionsRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {hasApiResults && suggestions.length > 0 && (
         <>
           <div className="suggestions-header">

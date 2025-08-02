@@ -11,6 +11,8 @@ const { Search } = Input;
 interface SearchBarProps {
   onSearch: (query: string) => void;
   onShowHistory?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   placeholder?: string;
   loading?: boolean;
 }
@@ -19,6 +21,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   placeholder = 'Buscar ciudad...',
   loading = false,
+  onFocus,
+  onBlur,
 }) => {
   const dispatch = useAppDispatch();
   const currentQuery = useAppSelector(selectCurrentQuery);
@@ -52,6 +56,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
         loading={loading}
         allowClear
         style={{ flex: 1 }}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </Space.Compact>
   );

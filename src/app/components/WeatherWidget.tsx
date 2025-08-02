@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { message } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useWeatherLoading } from '@shared/hooks/useLoading';
@@ -20,6 +20,7 @@ const WeatherWidget: React.FC = () => {
   const { isLoading, error } = useWeatherLoading();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
+  const hideTimeoutRef = useRef<number | null>(null);
   
   // Hook personalizado para manejar lastUpdateTime
   const { lastUpdateTime, hasInitialData, updateLastUpdateTime } = useLastUpdateTime();
@@ -64,16 +65,56 @@ const WeatherWidget: React.FC = () => {
     dispatch(setSelectedCity(preciseSearch));
     
     setShowSuggestions(false);
-    setCurrentQuery('');
-    // ❌ REMOVIDO: setLastUpdateTime(new Date()) - ahora se ejecuta solo cuando se obtienen los datos
+    // setCurrentQuery('');
   }, [dispatch]);
+
+  // Handlers para el foco del SearchBar
+  const handleFocus = useCallback(() => {
+    // Limpiar timeout si existe
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+    
+    // Mostrar sugerencias si hay query
+    console.log('SearchBar tomó el foco');
+    if (currentQuery.trim().length >= 2) {
+      setShowSuggestions(true);
+    }
+  }, [currentQuery]);
+
+  const handleBlur = useCallback(() => {
+    console.log('SearchBar perdió el foco');
+    
+    // Limpiar timeout anterior si existe
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+    
+    // Ocultar sugerencias después de un pequeño delay
+    // para permitir que el usuario haga clic en las sugerencias
+    hideTimeoutRef.current = window.setTimeout(() => {
+      setShowSuggestions(false);
+    }, 150); // 150ms de delay
+  }, []);
+
+  // Cleanup del timeout al desmontar
+  useEffect(() => {
+    return () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Memoizar props del SearchBar
   const searchBarProps = useMemo(() => ({
     onSearch: handleSearch,
     loading: isLoading,
-    placeholder: "Buscar ciudad..."
-  }), [handleSearch, isLoading]);
+    placeholder: "Buscar ciudad...",
+    onFocus: handleFocus,
+    onBlur: handleBlur
+  }), [handleSearch, isLoading, handleFocus, handleBlur]);
 
   // Memoizar props del SearchSuggestions
   const searchSuggestionsProps = useMemo(() => ({
