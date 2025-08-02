@@ -58,6 +58,7 @@
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0; // Evitar que se comprima
+      margin-bottom: 10px;
 
       .temperature-section {
         flex: 1;
@@ -120,7 +121,7 @@
         }
 
         .detail-icon {
-          font-size: 20px;
+          font-size: 40px;
           color: var(--accent-color);
           flex-shrink: 0;
         }
@@ -130,7 +131,7 @@
           min-width: 0; // Permitir que el texto se comprima
 
           .detail-label {
-            font-size: 12px;
+            font-size: 15px;
             color: var(--text-secondary);
             margin-bottom: 4px;
             display: block;
@@ -138,7 +139,7 @@
           }
 
           .detail-value {
-            font-size: 16px;
+            font-size: 25px;
             font-weight: 600;
             color: var(--text-primary);
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -271,8 +272,7 @@
         flex-direction: row; // Mantener horizontal
         gap: 12px;
         text-align: left; // Alinear a la izquierda
-        margin-bottom: 16px; // Reducir margen
-        justify-content: space-between; // Distribuir elementos
+        justify-content: sp1ace-between; // Distribuir elementos
 
         .weather-title {
           font-size: 18px; // Mantener tamaño original
@@ -295,7 +295,6 @@
         flex-direction: row; // Mantener horizontal
         text-align: left; // Alinear a la izquierda
         gap: 12px; // Reducir gap
-        margin-bottom: 16px; // Reducir margen
         justify-content: space-between; // Distribuir elementos
 
         .temperature-section {
@@ -356,7 +355,7 @@
       padding: 10px; // Padding aún más reducido
 
       .weather-header {
-        margin-bottom: 12px; // Margen más reducido
+        // margin-bottom: 12px; // Margen más reducido
 
         .weather-title {
           font-size: 18px; // Mantener tamaño original
@@ -428,7 +427,7 @@
       padding: 12px;
 
       .weather-header {
-        margin-bottom: 16px;
+        // margin-bottom: 16px;
         gap: 8px;
 
         .weather-title {
