@@ -1,14 +1,10 @@
 .map-container {
   position: relative;
   width: 100%;
-  // Altura proporcional al ancho de la pantalla
-  height: 60vh; // 60% de la altura de la ventana
   min-height: 500px; // Altura mínima para pantallas grandes
-  max-height: 800px; // Altura máxima para evitar que sea demasiado grande
   border-radius: 0px;
   overflow: hidden;
-  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  // margin: 16px 0;
+
 
   .weather-map {
     width: 100%;
