@@ -1,21 +1,10 @@
 .weather-widget {
   min-height: 100vh;
   width: 100%;
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  grid-template-columns: 1fr auto;
-  grid-template-areas: 
-    "search search"
-    "progress progress"
-    "weather history"
-    "map map";
-    gap: 16px;
-    padding: 16px;
-    // margin: 0 auto;
-    // margin-left: 10vw;
-    // margin-right: 10vw;
-    padding-left: 20vw;
-    padding-right: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
   position: relative;
   z-index: 1; // Z-index bajo para el contenedor principal
 
@@ -23,32 +12,64 @@
   .weather-widget__container {
     position: relative;
     z-index: 2; // Z-index bajo para el contenedor
-    display: contents;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 
+      "search search"
+      "progress progress"
+      "weather history"
+      "map map";
+    gap: 16px;
+    padding: 16px;
+    max-width: 1400px; // Limitar ancho máximo
+    width: 100%; // Ocupar todo el ancho disponible
+    margin: 0 auto; // Centrar el contenedor
+
+    @media (width > 1400px) and (width <= 1700px) {
+      width: 1200px;
+    }
+
+    @media (width > 1200px) and (width <= 1400px) {
+      width: 1000px;
+    }
+
+    @media (width > 900px) and (width <= 1200px) {
+      width: 900px;
+    }
+
+    @media (width > 768px) and (width <= 900px) {
+      width: 800px;
+    }
+
+    @media (width <= 768px) {
+      grid-template-rows: auto auto auto auto auto;
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+        "search"
+        "progress"
+        "weather"
+        "history"
+        "map";
+      gap: 12px;
+      padding: 12px;
+    }
+
+    // Para pantallas muy pequeñas
+    @media (width <= 480px) {
+      margin: 0 4px;
+      padding: 8px;
+      gap: 8px;
+    }
   }
 
-  // Responsive design con nueva notación
+ 
+
   @media (width <= 768px) {
     min-height: 100vh; // Mínimo altura de pantalla
-    
-    grid-template-rows: auto auto auto auto auto;
-    grid-template-columns: 1fr;
-    grid-template-areas: 
-      "search"
-      "progress"
-      "weather"
-      "history"
-      "map";
-    gap: 12px;
-    padding: 12px;
-    margin: 0 8px; // Margin horizontal reducido en móvil
   }
 
-  // Para pantallas muy pequeñas
-  @media (width <= 480px) {
-    margin: 0 4px;
-    padding: 8px;
-    gap: 8px;
-  }
+
 }
 
 // Fondo que cubre toda la pantalla (fuera del contenedor)
