@@ -9,7 +9,6 @@ import {
   setForecast,
   setSelectedCity,
   clearWeather,
-  setSelectedCoordinates
 } from '../store/weatherSlice';
 import { selectSelectedCity, selectSelectedCoordinates } from '../store/selectors';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';

@@ -50,11 +50,18 @@ const WeatherWidget: React.FC = () => {
     return {};
   }, [selectedCity, selectedCoordinates]);
 
+  // Callback que se ejecuta cuando se completan los datos climáticos
+  const handleWeatherDataLoaded = useCallback(() => {
+    updateLastUpdateTime();
+    // Auto-scroll a la parte superior después de cargar los datos
+    scrollToTop(500); // Delay más largo para asegurar que los datos estén renderizados
+  }, [updateLastUpdateTime, scrollToTop]);
+
   // Hook para clima - se ejecuta automáticamente cuando selectedCity o selectedCoordinates cambian
   // Solo actualiza lastUpdateTime cuando se obtienen los datos exitosamente
   useWeatherAndForecast(
     weatherParams,
-    updateLastUpdateTime // Callback que se ejecuta solo cuando se obtienen los datos
+    handleWeatherDataLoaded // Callback que se ejecuta cuando se completan los datos
   );
 
   // Manejo de errores con limpieza automática en Redux
