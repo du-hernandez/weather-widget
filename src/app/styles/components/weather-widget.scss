@@ -14,7 +14,9 @@
   margin: 0 auto;
   max-width: 1400px; // Limitar ancho máximo para pantallas muy grandes
   position: relative;
-  overflow: hidden;
+  // TODO: Cambiar a overflow: hidden cuando no se implemente el scroll
+  overflow: auto;
+  scrollbar-width: none;
   z-index: 1; // Z-index bajo para el contenedor principal
 
   // Contenedor principal
