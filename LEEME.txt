@@ -1,0 +1,300 @@
+WEATHERWIDGET
+=============
+
+Widget meteorológico moderno que muestra clima actual, pronóstico, búsqueda de ciudades y mapa interactivo.
+
+INFORMACIÓN DEL PROYECTO
+========================
+
+WeatherWidget es una aplicación web moderna que proporciona información meteorológica en tiempo real. Permite buscar ciudades, visualizar el clima actual y pronósticos, y explorar ubicaciones en un mapa interactivo.
+
+CARACTERÍSTICAS PRINCIPALES
+===========================
+
+- Búsqueda Inteligente: Autocompletado con sugerencias de ciudades
+- Clima Actual: Temperatura, humedad, viento y condiciones atmosféricas
+- Pronóstico: Predicciones para los próximos días
+- Mapa Interactivo: Visualización geográfica con Leaflet
+- Geolocalización: Detección automática de ubicación
+- Persistencia: Historial de búsquedas guardado localmente
+- Responsive: Diseño adaptativo para todos los dispositivos
+
+CONFIGURACIÓN
+=============
+
+REQUISITOS PREVIOS
+------------------
+
+- Node.js: >= 18.0.0
+- npm: >= 9.0.0
+
+PASOS DE INSTALACIÓN
+--------------------
+
+1. Clonar el repositorio
+   git clone <repository-url>
+   cd WeatherWidget
+
+2. Instalar dependencias
+   npm install
+
+3. Configurar variables de entorno
+   # Crear archivo .env en la raíz del proyecto
+   cp .env.example .env
+   
+   Editar .env con tus credenciales:
+   VITE_API_KEY=tu_api_key_de_openweathermap
+   VITE_BASE_URL=https://api.openweathermap.org
+
+4. Ejecutar en modo desarrollo
+   npm run dev
+
+5. Abrir en el navegador
+   http://localhost:5173
+
+SCRIPTS DISPONIBLES
+===================
+
+Comando                    Descripción
+---------                  -----------
+npm run dev               Inicia servidor de desarrollo
+npm run build             Construye para producción
+npm run preview           Previsualiza build de producción
+npm run lint              Ejecuta linting del código
+
+ARQUITECTURA
+============
+
+PATRÓN DE ARQUITECTURA
+----------------------
+
+La aplicación sigue una arquitectura modular basada en features con separación clara de responsabilidades:
+
+src/
+├── app/                 # Configuración global
+│   ├── components/      # Componentes principales
+│   ├── providers/       # Proveedores de contexto
+│   ├── store/          # Store de Redux
+│   └── styles/         # Estilos globales
+├── features/           # Módulos de funcionalidades
+│   ├── weather/        # Funcionalidad meteorológica
+│   ├── search/         # Búsqueda de ciudades
+│   └── map/           # Mapa interactivo
+└── shared/            # Código reutilizable
+    ├── hooks/         # Hooks personalizados
+    ├── services/      # Servicios HTTP
+    ├── utils/         # Utilidades
+    └── types/         # Tipos compartidos
+
+PRINCIPIOS DE DISEÑO
+--------------------
+
+- SOLID: Separación de responsabilidades
+- DRY: Evitar duplicación de código
+- KISS: Mantener simplicidad
+- Feature-based: Organización por funcionalidades
+
+TECNOLOGÍAS
+===========
+
+FRONTEND
+--------
+- React 19.1.0: Biblioteca de UI
+- TypeScript 5.8.3: Tipado estático
+- Vite 7.0.4: Build tool y dev server
+- SASS 1.89.2: Preprocesador CSS
+
+ESTADO Y DATOS
+--------------
+- Redux Toolkit 2.8.2: Gestión de estado
+- Redux Persist 6.0.0: Persistencia de datos
+- TanStack Query 5.84.1: Cache y sincronización de datos
+
+UI/UX
+------
+- Ant Design 5.26.7: Componentes de UI
+- Leaflet 1.9.4: Mapas interactivos
+- React Leaflet 5.0.0: Integración React-Leaflet
+
+UTILIDADES
+----------
+- Axios 1.11.0: Cliente HTTP
+- date-fns 4.1.0: Manipulación de fechas
+- ESLint 9.30.1: Linting de código
+
+PATRONES DE DISEÑO
+==================
+
+1. FEATURE-SLICE DESIGN
+-----------------------
+Cada feature es un módulo independiente con su propia estructura:
+
+feature/
+├── components/     # Componentes específicos
+├── hooks/         # Hooks de la feature
+├── services/      # Llamadas a API
+├── store/         # Estado Redux
+└── types/         # Tipos TypeScript
+
+2. CUSTOM HOOKS PATTERN
+-----------------------
+Hooks personalizados para lógica reutilizable:
+- useWeather: Gestión de datos meteorológicos
+- useSearch: Búsqueda de ciudades
+- useLazyBackground: Carga diferida de imágenes
+- useDebounce: Optimización de búsquedas
+
+3. PROVIDER PATTERN
+-------------------
+Proveedores de contexto para inyección de dependencias:
+- ReduxProvider: Estado global
+- QueryProvider: Cache de datos
+- MessageProvider: Notificaciones
+
+4. SERVICE LAYER PATTERN
+------------------------
+Capa de servicios para comunicación con APIs:
+- HttpClient: Cliente HTTP centralizado
+- WeatherApiService: Servicios meteorológicos
+- SearchApiService: Servicios de búsqueda
+
+5. SELECTOR PATTERN
+-------------------
+Selectores para acceso eficiente al estado:
+- Selectores básicos para cada slice
+- Selectores derivados para datos computados
+- Memoización con createSelector
+
+ESTRUCTURA DEL PROYECTO
+=======================
+
+MÓDULOS PRINCIPALES
+-------------------
+
+WEATHER FEATURE
+- Componentes: CurrentWeather, WeatherDetails, WeatherHeader
+- Hooks: useWeather, useWeatherAndForecast
+- Servicios: weatherApi.ts
+- Estado: weatherSlice.ts
+
+SEARCH FEATURE
+- Componentes: SearchBar, SearchSuggestions, RecentSearchesPanel
+- Hooks: useSearch, useSmartSuggestions, useHistoryManagement
+- Servicios: searchApi.ts
+- Estado: searchSlice.ts
+
+MAP FEATURE
+- Componentes: MapComponent, MapWrapper, MapUpdater
+- Hooks: useMapState, useMapSelection
+- Estado: mapSlice.ts
+
+HOOKS COMPARTIDOS
+-----------------
+
+Hook                    Descripción
+----                    -----------
+useDebounce            Optimiza llamadas a API
+useGeolocation         Maneja geolocalización
+useProgressBar         Controla barra de progreso
+useAutoScroll          Scroll automático
+useLazyBackground      Carga diferida de fondos
+
+SERVICIOS
+----------
+
+Servicio               Función
+--------               -------
+HttpClient             Cliente HTTP con interceptores
+ErrorHandler           Manejo centralizado de errores
+WeatherApiService      APIs meteorológicas
+SearchApiService       APIs de geocoding
+
+CONFIGURACIÓN AVANZADA
+======================
+
+VARIABLES DE ENTORNO
+--------------------
+
+VITE_API_KEY=tu_api_key_de_openweathermap
+VITE_BASE_URL=https://api.openweathermap.org
+
+ALIAS DE IMPORTACIÓN
+--------------------
+
+Alias      Ruta
+-----      ----
+@          src/
+@app       src/app/
+@features  src/features/
+@shared    src/shared/
+@assets    src/assets/
+
+CONFIGURACIÓN DE BUILD
+---------------------
+
+- Vite: Configurado para React + TypeScript
+- ESLint: Reglas para React Hooks y TypeScript
+- SASS: Preprocesador CSS con variables CSS
+
+DESPLIEGUE
+==========
+
+BUILD DE PRODUCCIÓN
+-------------------
+npm run build
+
+PREVISUALIZACIÓN
+----------------
+npm run preview
+
+LINTING
+--------
+npm run lint
+
+EJEMPLOS DE USO
+===============
+
+IMPORTACIÓN CON ALIAS
+---------------------
+
+Antes (paths relativos):
+import { useAppSelector } from '../../shared/hooks/redux';
+import { selectWeather } from '../../features/weather/store/selectors';
+import WeatherWidget from './app/components/WeatherWidget';
+
+Después (alias):
+import { useAppSelector } from '@shared/hooks/redux';
+import { selectWeather } from '@features/weather/store/selectors';
+import WeatherWidget from '@app/components/WeatherWidget';
+
+VENTAJAS DE LOS ALIAS
+---------------------
+
+1. Imports más limpios - No más ../../../ 
+2. Mantenimiento fácil - Mover archivos no rompe imports
+3. Legibilidad - Fácil identificar de dónde viene cada import
+4. Consistencia - Patrón uniforme en todo el proyecto
+
+CONFIGURACIÓN DE ALIAS
+---------------------
+
+Los alias están configurados en:
+- vite.config.ts - Para Vite
+- tsconfig.app.json - Para TypeScript
+
+NOTAS IMPORTANTES
+=================
+
+- Usa siempre los alias en lugar de paths relativos
+- Mantén la estructura de features organizada
+- Sigue los patrones de diseño establecidos
+- Documenta cualquier cambio en la arquitectura
+
+CONTACTO
+========
+
+Desarrollado con las mejores prácticas de desarrollo web moderno usando React, TypeScript y una arquitectura modular escalable.
+
+---
+
+Para más información detallada, consulta el archivo README.md que incluye documentación completa con ejemplos visuales y diagramas. 

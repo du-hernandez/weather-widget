@@ -5,6 +5,7 @@
 ## 📋 Tabla de Contenidos
 
 - [Información del Proyecto](#información-del-proyecto)
+- [Vista Previa](#vista-previa)
 - [Configuración](#configuración)
 - [Arquitectura](#arquitectura)
 - [Tecnologías](#tecnologías)
@@ -25,6 +26,22 @@ WeatherWidget es una aplicación web moderna que proporciona información meteor
 - 📍 **Geolocalización**: Detección automática de ubicación
 - 💾 **Persistencia**: Historial de búsquedas guardado localmente
 - 📱 **Responsive**: Diseño adaptativo para todos los dispositivos
+
+## 🖼️ Vista Previa
+
+WeatherWidget ofrece una experiencia de usuario moderna e intuitiva con múltiples formas de interactuar con la información meteorológica:
+
+### 🔍 Búsqueda Inteligente con Sugerencias
+![Sugerencias de Búsqueda](imgs/Sugerencias.png)
+*Autocompletado inteligente que muestra sugerencias de ciudades mientras escribes, con información de país y estado*
+
+### 📚 Historial de Búsquedas
+![Historial de Búsquedas](imgs/Busquedas.png)
+*Panel de búsquedas recientes con persistencia local, permitiendo acceso rápido a ubicaciones anteriores*
+
+### 🗺️ Selección desde el Mapa Interactivo
+![Selección desde el Mapa](imgs/Selección%20desde%20el%20mapa.png)
+*Mapa interactivo que permite seleccionar ubicaciones directamente, con marcadores y información geográfica detallada*
 
 ## ⚙️ Configuración
 
