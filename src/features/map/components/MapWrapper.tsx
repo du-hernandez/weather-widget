@@ -1,9 +1,10 @@
-import React from 'react';
-import { Button, Card, Space, Typography } from 'antd';
+import React, { useCallback } from 'react';
+import { Button, Card, Space, Typography, message } from 'antd';
 import { ClearOutlined, AimOutlined } from '@ant-design/icons';
 import { MapComponent } from './MapComponent';
 import { useMapState } from '../hooks/useMapState';
 import { useMapSelection } from '../hooks/useMapSelection';
+import { useGeolocation } from '@shared/hooks/useGeolocation';
 
 const { Text, Title } = Typography;
 
@@ -11,33 +12,47 @@ const { Text, Title } = Typography;
  * Componente wrapper que integra el mapa con controles
  */
 export const MapWrapper: React.FC = () => {
-  const { selectedLocation, hasSelectedLocation, coordinates } = useMapState();
-  const { clearSelection } = useMapSelection();
+  const { selectedLocation, hasSelectedLocation, updateCenter, updateZoom } = useMapState();
+  const { clearSelection, handleMapClick } = useMapSelection();
+  const { getCurrentLocation, isSupported, isLoading: geolocationLoading } = useGeolocation();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleClearSelection = () => {
     clearSelection();
   };
 
-  const handleCenterOnUser = () => {
-    // Función para centrar en la ubicación del usuario
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          // Aquí podrías implementar la lógica para centrar el mapa
-          console.log('Ubicación del usuario:', { latitude, longitude });
-        },
-        (error) => {
-          console.error('Error al obtener ubicación:', error);
-        }
-      );
+  const handleCenterOnUser = useCallback(async () => {
+    try {
+      // Verificar si la geolocalización está soportada
+      if (!isSupported()) {
+        messageApi.error('Geolocalización no soportada por este navegador');
+        return;
+      }
+
+      // Obtener la ubicación actual del usuario
+      const position = await getCurrentLocation();
+      
+      // Centrar el mapa en la ubicación del usuario
+      updateCenter([position.latitude, position.longitude]);
+      updateZoom(12); // Zoom más cercano para mostrar detalles
+      
+      // Seleccionar automáticamente la ubicación del usuario
+      await handleMapClick(position.latitude, position.longitude);
+      
+      messageApi.success('Ubicación actual centrada en el mapa');
+      
+    } catch (error) {
+      console.error('Error al obtener ubicación del usuario:', error);
+      messageApi.error('No se pudo obtener tu ubicación actual');
     }
-  };
+  }, [isSupported, getCurrentLocation, updateCenter, updateZoom, handleMapClick, messageApi]);
 
   return (
-    <div className="map-wrapper-container">
-      {/* Header con efecto glass */}
-      <div className="glass-effect map-header">
+    <>
+      {contextHolder}
+      <div className="map-wrapper-container">
+        {/* Header con efecto glass */}
+        <div className="glass-effect map-header">
         <div className="map-header-content">
           <div className="map-header-title">
             <AimOutlined className="map-icon" />
@@ -47,6 +62,7 @@ export const MapWrapper: React.FC = () => {
             <Button 
               icon={<AimOutlined />} 
               onClick={handleCenterOnUser}
+              loading={geolocationLoading}
               size="small"
               className="map-action-btn"
             >
@@ -92,6 +108,7 @@ export const MapWrapper: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 }; 

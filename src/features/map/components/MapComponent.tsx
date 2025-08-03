@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import { Icon } from 'leaflet';
+import type { LeafletMouseEvent } from 'leaflet';
 import { useMapSelection } from '../hooks/useMapSelection';
 import { useMapState } from '../hooks/useMapState';
 import 'leaflet/dist/leaflet.css';
@@ -20,7 +21,7 @@ const MapEvents: React.FC = () => {
   const { handleMapClick } = useMapSelection();
 
   useMapEvents({
-    click: useCallback((event) => {
+    click: useCallback((event: LeafletMouseEvent) => {
       const { lat, lng } = event.latlng;
       handleMapClick(lat, lng);
     }, [handleMapClick]),
