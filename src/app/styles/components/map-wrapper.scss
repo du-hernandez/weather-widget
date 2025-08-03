@@ -1,0 +1,88 @@
+.map-wrapper-card {
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .ant-card-head {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 16px 24px;
+
+    .ant-card-head-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .ant-card-body {
+    padding: 0;
+  }
+
+  .selected-location-info {
+    padding: 16px 24px;
+    background: #f8f9fa;
+    border-top: 1px solid #f0f0f0;
+    border-radius: 0 0 12px 12px;
+
+    .ant-space {
+      width: 100%;
+    }
+
+    .ant-typography {
+      margin: 0;
+    }
+  }
+
+  // Estilos para los botones en el header
+  .ant-card-extra {
+    .ant-space {
+      gap: 8px;
+    }
+
+    .ant-btn {
+      border-radius: 6px;
+      font-size: 12px;
+      height: 28px;
+      padding: 0 12px;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .map-wrapper-card {
+    margin: 12px 0;
+
+    .ant-card-head {
+      padding: 12px 16px;
+
+      .ant-card-head-title {
+        font-size: 14px;
+      }
+    }
+
+    .selected-location-info {
+      padding: 12px 16px;
+    }
+
+    .ant-card-extra {
+      .ant-btn {
+        font-size: 11px;
+        height: 24px;
+        padding: 0 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .map-wrapper-card {
+    .ant-card-head {
+      padding: 8px 12px;
+    }
+
+    .selected-location-info {
+      padding: 8px 12px;
+    }
+  }
+} 

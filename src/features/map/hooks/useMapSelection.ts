@@ -28,8 +28,12 @@ export const useMapSelection = () => {
 
       dispatch(setSelectedLocation(selectedLocation));
 
-      // Buscar información de la ciudad por coordenadas
-      const { data: cities } = await useCityByCoordinates({ lat, lon: lng });
+      // Usar coordenadas directamente para el clima
+      dispatch(setSelectedCoordinates({ lat, lon: lng }));
+
+      // Buscar información de la ciudad por coordenadas usando el servicio
+      const searchApiService = (await import('@features/search/services/searchApi')).default;
+      const cities = await searchApiService.getCityByCoordinates({ lat, lon: lng });
       
       if (cities && cities.length > 0) {
         const city = cities[0];
@@ -45,12 +49,6 @@ export const useMapSelection = () => {
         
         // Agregar al historial de búsquedas
         dispatch(addToHistory(city));
-        
-        // Usar coordenadas directamente para el clima
-        dispatch(setSelectedCoordinates({ lat, lon: lng }));
-      } else {
-        // Si no se encuentra ciudad, usar coordenadas directamente
-        dispatch(setSelectedCoordinates({ lat, lon: lng }));
       }
 
       dispatch(setLoading(false));

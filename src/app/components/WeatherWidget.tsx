@@ -8,6 +8,7 @@ import SearchSuggestions from '@features/search/components/SearchSuggestions';
 import CurrentWeather from '@features/weather/components/CurrentWeather';
 import ProgressBarWrapper from '@app/components/ProgressBarWrapper';
 import RecentSearchesPanel from '@features/search/components/RecentSearchesPanel';
+import { MapWrapper } from '@features/map/components/MapWrapper';
 import { useWeatherAndForecast } from '@features/weather/hooks/useWeather';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
@@ -189,16 +190,9 @@ const WeatherWidget: React.FC = () => {
             <RecentSearchesPanel {...recentSearchesProps} />
           </div>
 
-          {/* Espacio para mapa - Grid Area: map */}
+          {/* Mapa interactivo - Grid Area: map */}
           <div style={{ gridArea: 'map' }}>
-            <div className="glass-effect" style={{ height: '200px', padding: '24px' }}>
-              <h3 className="text-shadow" style={{ color: 'var(--text-primary)', marginBottom: '16px' }}>
-                Mapa
-              </h3>
-              <p style={{ color: 'var(--text-secondary)' }}>
-                Espacio reservado para implementación del mapa...
-              </p>
-            </div>
+            <MapWrapper />
           </div>
         </div>
       </div>
