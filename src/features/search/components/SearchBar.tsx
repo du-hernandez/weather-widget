@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { setCurrentQuery } from '../store/searchSlice';
 import { selectCurrentQuery } from '../store/selectors';
 import { useDebounce } from '@shared/hooks/useDebounce';
+import { LocationButton } from '@/app/components/LocationButton';
 
 
 const { Search } = Input;
@@ -48,18 +49,26 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <Space.Compact style={{ width: '100%' }}>
-      <Search
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        loading={loading}
-        allowClear
-        style={{ flex: 1 }}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
+    <div className="search-bar-container">
+      <Space.Compact className="search-bar-content">
+        <Search
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          loading={loading}
+          allowClear
+          style={{ flex: 1 }}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        />
     </Space.Compact>
+    <LocationButton
+        size="middle"
+        className="search-location-btn"
+        showSuccessMessage={false}
+        showErrorMessage={true}
+      />
+    </div>
   );
 };
 
