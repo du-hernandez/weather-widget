@@ -1,84 +1,176 @@
-.map-wrapper-card {
+.map-wrapper-container {
   margin: 16px 0;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 
-  .ant-card-head {
-    border-bottom: 1px solid #f0f0f0;
+  // Header con efecto glass
+  .map-header {
     padding: 16px 24px;
+    border-radius: 12px 12px 0 0;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: none;
 
-    .ant-card-head-title {
+    .map-header-content {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
+
+      .map-header-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .map-icon {
+          font-size: 20px;
+          color: var(--text-primary);
+        }
+
+        h3 {
+          margin: 0;
+          color: var(--text-primary);
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+
+      .map-header-actions {
+        display: flex;
+        gap: 8px;
+
+        .map-action-btn {
+          border-radius: 6px;
+          font-size: 12px;
+          height: 32px;
+          padding: 0 12px;
+          backdrop-filter: blur(5px);
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: var(--text-primary);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+          }
+
+          &.ant-btn-dangerous {
+            background: rgba(255, 77, 79, 0.1);
+            border-color: rgba(255, 77, 79, 0.3);
+            color: #ff4d4f;
+
+            &:hover {
+              background: rgba(255, 77, 79, 0.2);
+              border-color: rgba(255, 77, 79, 0.4);
+            }
+          }
+        }
+      }
     }
   }
 
-  .ant-card-body {
-    padding: 0;
+  // Contenido del mapa
+  .map-content {
+    // flex: 1;
+    // padding-top: 0;
+    // margin-top: 0;
+    // padding-bottom: 5px;
+    // padding-left: 10px;
+    // padding-right: 10px;
+    // backdrop-filter: var(--glass-backdrop);
+    // background: rgba(255, 255, 255, 0.1);
+    // border: 1px solid rgba(255, 255, 255, 0.2);
+    // min-height: 400px;
   }
 
+  // Información de ubicación seleccionada
   .selected-location-info {
     padding: 16px 24px;
-    background: #f8f9fa;
-    border-top: 1px solid #f0f0f0;
     border-radius: 0 0 12px 12px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
 
-    .ant-space {
-      width: 100%;
-    }
+    .location-info-content {
+      .location-info-title {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 14px;
+      }
 
-    .ant-typography {
-      margin: 0;
-    }
-  }
+      .location-details {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
 
-  // Estilos para los botones en el header
-  .ant-card-extra {
-    .ant-space {
-      gap: 8px;
-    }
-
-    .ant-btn {
-      border-radius: 6px;
-      font-size: 12px;
-      height: 28px;
-      padding: 0 12px;
+        .location-coordinates,
+        .location-city {
+          margin: 0;
+          color: var(--text-secondary);
+          font-size: 13px;
+        }
+      }
     }
   }
 }
 
 // Responsive design
 @media (max-width: 768px) {
-  .map-wrapper-card {
+  .map-wrapper-container {
     margin: 12px 0;
 
-    .ant-card-head {
+    .map-header {
       padding: 12px 16px;
 
-      .ant-card-head-title {
-        font-size: 14px;
+      .map-header-content {
+        gap: 12px;
+
+        .map-header-title {
+          h3 {
+            font-size: 16px;
+          }
+        }
+
+        .map-header-actions {
+          .map-action-btn {
+            font-size: 11px;
+            height: 28px;
+            padding: 0 8px;
+          }
+        }
       }
     }
 
     .selected-location-info {
       padding: 12px 16px;
     }
-
-    .ant-card-extra {
-      .ant-btn {
-        font-size: 11px;
-        height: 24px;
-        padding: 0 8px;
-      }
-    }
   }
 }
 
 @media (max-width: 480px) {
-  .map-wrapper-card {
-    .ant-card-head {
+  .map-wrapper-container {
+    .map-header {
       padding: 8px 12px;
+
+      .map-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+
+        .map-header-actions {
+          width: 100%;
+          justify-content: flex-end;
+        }
+      }
     }
 
     .selected-location-info {

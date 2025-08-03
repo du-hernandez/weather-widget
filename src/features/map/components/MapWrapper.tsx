@@ -35,55 +35,63 @@ export const MapWrapper: React.FC = () => {
   };
 
   return (
-    <Card 
-      title={
-        <Space>
-          <AimOutlined />
-          <Title level={4} style={{ margin: 0 }}>Selecciona una ubicación</Title>
-        </Space>
-      }
-      extra={
-        <Space>
-          <Button 
-            icon={<AimOutlined />} 
-            onClick={handleCenterOnUser}
-            size="small"
-          >
-            Mi ubicación
-          </Button>
-          {hasSelectedLocation && (
+    <div className="map-wrapper-container">
+      {/* Header con efecto glass */}
+      <div className="glass-effect map-header">
+        <div className="map-header-content">
+          <div className="map-header-title">
+            <AimOutlined className="map-icon" />
+            <h3 className="text-shadow">Selecciona una ubicación</h3>
+          </div>
+          <div className="map-header-actions">
             <Button 
-              icon={<ClearOutlined />} 
-              onClick={handleClearSelection}
+              icon={<AimOutlined />} 
+              onClick={handleCenterOnUser}
               size="small"
-              danger
+              className="map-action-btn"
             >
-              Limpiar
+              Mi ubicación
             </Button>
-          )}
-        </Space>
-      }
-      className="map-wrapper-card"
-    >
-      <MapComponent />
-      
-      {selectedLocation && (
-        <div className="selected-location-info">
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Text strong>Ubicación seleccionada:</Text>
-            <Text type="secondary">
-              Latitud: {selectedLocation.lat.toFixed(4)}, 
-              Longitud: {selectedLocation.lng.toFixed(4)}
-            </Text>
-            {selectedLocation.city && (
-              <Text type="secondary">
-                Ciudad: {selectedLocation.city}
-                {selectedLocation.country && `, ${selectedLocation.country}`}
-              </Text>
+            {hasSelectedLocation && (
+              <Button 
+                icon={<ClearOutlined />} 
+                onClick={handleClearSelection}
+                size="small"
+                danger
+                className="map-action-btn"
+              >
+                Limpiar
+              </Button>
             )}
-          </Space>
+          </div>
+        </div>
+      </div>
+
+      {/* Contenido del mapa */}
+      <div className="map-content">
+        <MapComponent />
+      </div>
+      
+      {/* Información de ubicación seleccionada */}
+      {selectedLocation && (
+        <div className="glass-effect selected-location-info">
+          <div className="location-info-content">
+            <Text strong className="location-info-title">Ubicación seleccionada:</Text>
+            <div className="location-details">
+              <Text type="secondary" className="location-coordinates">
+                Latitud: {selectedLocation.lat.toFixed(4)}, 
+                Longitud: {selectedLocation.lng.toFixed(4)}
+              </Text>
+              {selectedLocation.city && (
+                <Text type="secondary" className="location-city">
+                  Ciudad: {selectedLocation.city}
+                  {selectedLocation.country && `, ${selectedLocation.country}`}
+                </Text>
+              )}
+            </div>
+          </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 }; 
