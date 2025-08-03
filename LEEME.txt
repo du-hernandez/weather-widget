@@ -3,6 +3,11 @@ WEATHERWIDGET
 
 Widget meteorológico moderno que muestra clima actual, pronóstico, búsqueda de ciudades y mapa interactivo.
 
+REPOSITORIO
+===========
+
+GitHub: https://github.com/du-hernandez/weather-widget
+
 INFORMACIÓN DEL PROYECTO
 ========================
 
@@ -32,8 +37,8 @@ PASOS DE INSTALACIÓN
 --------------------
 
 1. Clonar el repositorio
-   git clone <repository-url>
-   cd WeatherWidget
+   git clone https://github.com/du-hernandez/weather-widget
+   cd weather-widget
 
 2. Instalar dependencias
    npm install
@@ -294,6 +299,10 @@ CONTACTO
 ========
 
 Desarrollado con las mejores prácticas de desarrollo web moderno usando React, TypeScript y una arquitectura modular escalable.
+
+REPOSITORIO
+-----------
+GitHub: https://github.com/du-hernandez/weather-widget
 
 ---
 
