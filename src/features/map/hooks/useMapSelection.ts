@@ -2,7 +2,7 @@ import { useAppDispatch } from '@shared/hooks/redux';
 import { useCityByCoordinates } from '@features/search/hooks/useSearch';
 import { setSelectedLocation, setLoading, setError } from '../store/mapSlice';
 import { addToHistory } from '@features/search/store/searchSlice';
-import { setSelectedCity } from '@features/weather/store/weatherSlice';
+import { setSelectedCity, setSelectedCoordinates } from '@features/weather/store/weatherSlice';
 import { cleanCityNameForWeatherAPI } from '@shared/utils';
 import type { SelectedLocation } from '../types';
 
@@ -46,9 +46,11 @@ export const useMapSelection = () => {
         // Agregar al historial de búsquedas
         dispatch(addToHistory(city));
         
-        // Actualizar la ciudad seleccionada para que useWeatherAndForecast se ejecute automáticamente
-        const preciseSearch = cleanCityNameForWeatherAPI(city.name, city.country);
-        dispatch(setSelectedCity(preciseSearch));
+        // Usar coordenadas directamente para el clima
+        dispatch(setSelectedCoordinates({ lat, lon: lng }));
+      } else {
+        // Si no se encuentra ciudad, usar coordenadas directamente
+        dispatch(setSelectedCoordinates({ lat, lon: lng }));
       }
 
       dispatch(setLoading(false));

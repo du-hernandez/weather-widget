@@ -8,6 +8,7 @@ const initialState: WeatherState = {
   currentWeather: null,
   forecast: null,
   selectedCity: null,
+  selectedCoordinates: null,
   units: 'metric',
 };
 
@@ -37,6 +38,11 @@ const weatherSlice = createSlice({
     },
     setSelectedCity: (state, action: PayloadAction<string>) => {
       state.selectedCity = action.payload;
+      state.selectedCoordinates = null; // Limpiar coordenadas cuando se selecciona ciudad
+    },
+    setSelectedCoordinates: (state, action: PayloadAction<{ lat: number; lon: number }>) => {
+      state.selectedCoordinates = action.payload;
+      state.selectedCity = null; // Limpiar ciudad cuando se seleccionan coordenadas
     },
     setUnits: (state, action: PayloadAction<'metric' | 'imperial'>) => {
       state.units = action.payload;
@@ -45,6 +51,7 @@ const weatherSlice = createSlice({
       state.currentWeather = null;
       state.forecast = null;
       state.selectedCity = null;
+      state.selectedCoordinates = null;
       state.error = null;
     },
   },
@@ -56,6 +63,7 @@ export const {
   setCurrentWeather,
   setForecast,
   setSelectedCity,
+  setSelectedCoordinates,
   setUnits,
   clearWeather,
 } = weatherSlice.actions;

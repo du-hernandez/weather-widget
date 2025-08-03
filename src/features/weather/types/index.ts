@@ -95,5 +95,6 @@ export interface WeatherState extends LoadingState {
   currentWeather: WeatherData | null;
   forecast: ForecastData | null;
   selectedCity: string | null;
+  selectedCoordinates: { lat: number; lon: number } | null;
   units: 'metric' | 'imperial';
 } 

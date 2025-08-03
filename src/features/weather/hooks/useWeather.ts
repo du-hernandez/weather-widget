@@ -8,9 +8,10 @@ import {
   setCurrentWeather, 
   setForecast,
   setSelectedCity,
-  clearWeather 
+  clearWeather,
+  setSelectedCoordinates
 } from '../store/weatherSlice';
-import { selectSelectedCity } from '../store/selectors';
+import { selectSelectedCity, selectSelectedCoordinates } from '../store/selectors';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';
 import type { AppError } from '@shared/services/error-handler';
 import { createQueryKeyFactory } from '@shared/utils/query-keys';
@@ -109,6 +110,7 @@ export const useWeatherAndForecast = (
 ) => {
   const dispatch = useAppDispatch();
   const currentSelectedCity = useAppSelector(selectSelectedCity);
+  const currentSelectedCoordinates = useAppSelector(selectSelectedCoordinates);
 
   const query = useQuery({
     queryKey: weatherKeys.custom('combined', params),
@@ -122,10 +124,17 @@ export const useWeatherAndForecast = (
       dispatch(setCurrentWeather(query.data.currentWeather));
       dispatch(setForecast(query.data.forecast));
       
-      // Solo actualizar selectedCity si es diferente o si no hay ciudad seleccionada
-      // Esto evita que se actualice con solo el nombre cuando ya tenemos city,country
-      if (!currentSelectedCity || (params.q && params.q !== currentSelectedCity)) {
-        dispatch(setSelectedCity(params.q || query.data.currentWeather.name));
+      // Si tenemos coordenadas en los parámetros, actualizar coordenadas seleccionadas
+      if (params.lat && params.lon) {
+        dispatch(setSelectedCoordinates({ lat: params.lat, lon: params.lon }));
+      }
+      // Si tenemos ciudad en los parámetros, actualizar ciudad seleccionada
+      else if (params.q) {
+        // Solo actualizar selectedCity si es diferente o si no hay ciudad seleccionada
+        // Esto evita que se actualice con solo el nombre cuando ya tenemos city,country
+        if (!currentSelectedCity || params.q !== currentSelectedCity) {
+          dispatch(setSelectedCity(params.q || query.data.currentWeather.name));
+        }
       }
       
       // Ejecutar callback de éxito si está definido
@@ -133,7 +142,7 @@ export const useWeatherAndForecast = (
         onSuccess();
       }
     }
-  }, [query.data, dispatch, onSuccess, currentSelectedCity, params.q]);
+  }, [query.data, dispatch, onSuccess, currentSelectedCity, currentSelectedCoordinates, params.q, params.lat, params.lon]);
 
   useEffect(() => {
     if (query.error) {

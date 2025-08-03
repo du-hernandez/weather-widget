@@ -6,6 +6,7 @@ export const selectWeatherState = (state: RootState) => state.weather;
 export const selectCurrentWeather = (state: RootState) => state.weather.currentWeather;
 export const selectForecast = (state: RootState) => state.weather.forecast;
 export const selectSelectedCity = (state: RootState) => state.weather.selectedCity;
+export const selectSelectedCoordinates = (state: RootState) => state.weather.selectedCoordinates;
 export const selectUnits = (state: RootState) => state.weather.units;
 export const selectIsLoading = (state: RootState) => state.weather.isLoading;
 export const selectError = (state: RootState) => state.weather.error;

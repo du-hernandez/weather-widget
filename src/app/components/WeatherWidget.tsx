@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { message } from 'antd';
 import { useAppSelector } from '@shared/hooks/redux';
 import { useWeatherLoading } from '@shared/hooks/useLoading';
-import { selectSelectedCity } from '@features/weather/store/selectors';
+import { selectSelectedCity, selectSelectedCoordinates } from '@features/weather/store/selectors';
 import SearchBar from '@features/search/components/SearchBar';
 import SearchSuggestions from '@features/search/components/SearchSuggestions';
 import CurrentWeather from '@features/weather/components/CurrentWeather';
@@ -20,6 +20,7 @@ import '@app/styles/index.scss';
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedCity = useAppSelector(selectSelectedCity);
+  const selectedCoordinates = useAppSelector(selectSelectedCoordinates);
   const { isLoading, error } = useWeatherLoading();
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
@@ -31,11 +32,20 @@ const WeatherWidget: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   // Memoizar los parámetros del hook para evitar re-ejecuciones innecesarias
-  const weatherParams = useMemo(() => ({ 
-    q: selectedCity || '' 
-  }), [selectedCity]);
+  const weatherParams = useMemo(() => {
+    // Si tenemos coordenadas seleccionadas, usarlas
+    if (selectedCoordinates) {
+      return { lat: selectedCoordinates.lat, lon: selectedCoordinates.lon };
+    }
+    // Si tenemos ciudad seleccionada, usarla
+    else if (selectedCity) {
+      return { q: selectedCity };
+    }
+    // Si no hay nada seleccionado, retornar objeto vacío
+    return {};
+  }, [selectedCity, selectedCoordinates]);
 
-  // Hook para clima - se ejecuta automáticamente cuando selectedCity cambia
+  // Hook para clima - se ejecuta automáticamente cuando selectedCity o selectedCoordinates cambian
   // Solo actualiza lastUpdateTime cuando se obtienen los datos exitosamente
   useWeatherAndForecast(
     weatherParams,
