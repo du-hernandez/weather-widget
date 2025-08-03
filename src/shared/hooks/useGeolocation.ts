@@ -66,7 +66,7 @@ export const useGeolocation = () => {
       const options: PositionOptions = {
         enableHighAccuracy: true,
         timeout: 10000,
-        maximumAge: 60000 // Cache por 1 minuto
+        maximumAge: 0 // No usar cache para obtener ubicación fresca
       };
 
       navigator.geolocation.getCurrentPosition(

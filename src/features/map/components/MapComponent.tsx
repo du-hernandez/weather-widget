@@ -4,6 +4,7 @@ import { Icon } from 'leaflet';
 import type { LeafletMouseEvent } from 'leaflet';
 import { useMapSelection } from '../hooks/useMapSelection';
 import { useMapState } from '../hooks/useMapState';
+import { MapUpdater } from './MapUpdater';
 import 'leaflet/dist/leaflet.css';
 
 // Fix para los iconos de Leaflet en React
@@ -80,6 +81,7 @@ export const MapComponent: React.FC = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MapEvents />
+        <MapUpdater />
         {selectedMarker}
       </MapContainer>
       
