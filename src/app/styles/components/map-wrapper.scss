@@ -77,16 +77,10 @@
 
   // Contenido del mapa
   .map-content {
-    // flex: 1;
-    // padding-top: 0;
-    // margin-top: 0;
-    // padding-bottom: 5px;
-    // padding-left: 10px;
-    // padding-right: 10px;
-    // backdrop-filter: var(--glass-backdrop);
-    // background: rgba(255, 255, 255, 0.1);
-    // border: 1px solid rgba(255, 255, 255, 0.2);
-    // min-height: 400px;
+    flex: 1;
+    min-height: 500px; // Altura mínima para el contenedor
+    background-color: red;
+    padding: 0; // Sin padding para que el mapa ocupe todo el espacio
   }
 
   // Información de ubicación seleccionada
@@ -124,7 +118,7 @@
 }
 
 // Responsive design
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .map-wrapper-container {
     margin: 12px 0;
 
@@ -150,27 +144,46 @@
       }
     }
 
+    .map-content {
+      min-height: 400px; // Altura mínima para tablets
+    }
+
     .selected-location-info {
       padding: 12px 16px;
     }
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .map-wrapper-container {
     .map-header {
       padding: 8px 12px;
 
       .map-header-content {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center; // Centrar el contenido
         gap: 8px;
+
+        .map-header-title {
+          display: none; // Ocultar título e icono en móviles
+        }
 
         .map-header-actions {
           width: 100%;
-          justify-content: flex-end;
+          justify-content: center; // Centrar el botón
+          
+          .map-action-btn {
+            font-size: 14px; // Texto más grande
+            height: 36px; // Botón más alto
+            padding: 0 16px; // Más padding horizontal
+            font-weight: 500; // Texto más grueso
+          }
         }
       }
+    }
+
+    .map-content {
+      min-height: 300px; // Altura mínima para móviles
     }
 
     .selected-location-info {

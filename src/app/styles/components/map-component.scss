@@ -1,7 +1,10 @@
 .map-container {
   position: relative;
   width: 100%;
-  height: 400px;
+  // Altura proporcional al ancho de la pantalla
+  height: 60vh; // 60% de la altura de la ventana
+  min-height: 500px; // Altura mínima para pantallas grandes
+  max-height: 800px; // Altura máxima para evitar que sea demasiado grande
   border-radius: 0px;
   overflow: hidden;
   // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -80,10 +83,12 @@
 }
 
 // Responsive design
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .map-container {
-    height: 300px;
-    margin: 12px 0;
+    height: 50vh; // 50% de la altura de la ventana en tablets
+    min-height: 400px; // Altura mínima para tablets
+    max-height: 600px; // Altura máxima para tablets
+    // margin: 12px 0;
 
     .map-loading {
       padding: 12px 16px;
@@ -103,8 +108,10 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .map-container {
-    height: 250px;
+    height: 40vh; // 40% de la altura de la ventana en móviles
+    min-height: 300px; // Altura mínima para móviles
+    max-height: 450px; // Altura máxima para móviles
   }
 } 

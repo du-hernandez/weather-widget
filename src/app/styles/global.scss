@@ -21,24 +21,15 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; // Evitar scroll vertical por defecto
-}
-
-// Permitir scroll en pantallas pequeñas
-@media (width <= 768px) {
-  html, body {
-    overflow: auto; // Permitir scroll en móviles
-    height: auto; // Permitir que el contenido determine la altura
-    min-height: 100vh; // Mínimo altura de pantalla
-    
-    // Ocultar barra del scroll pero mantener funcionalidad
-    scrollbar-width: none; // Firefox
-    -ms-overflow-style: none; // Internet Explorer 10+
-    
-    // Ocultar scrollbar en WebKit (Chrome, Safari, Edge)
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  overflow: auto; // Permitir scroll
+  
+  // Ocultar barra del scroll pero mantener funcionalidad
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // Internet Explorer 10+
+  
+  // Ocultar scrollbar en WebKit (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -49,23 +40,29 @@ html, body {
   padding: 0;
   max-width: none;
   text-align: left;
+  overflow: auto; // Permitir scroll
+  
+  // Ocultar barra del scroll pero mantener funcionalidad
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // Internet Explorer 10+
+  
+  // Ocultar scrollbar en WebKit (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-// Ajustar #root para pantallas pequeñas
+// Ajustes para pantallas pequeñas
 @media (width <= 768px) {
+  html, body {
+    height: auto; // Permitir que el contenido determine la altura
+    min-height: 100vh; // Mínimo altura de pantalla
+  }
+  
   #root {
     height: auto; // Permitir que el contenido determine la altura
     min-height: 100vh; // Mínimo altura de pantalla
     width: 100%; // Usar ancho completo
-    
-    // Ocultar barra del scroll pero mantener funcionalidad
-    scrollbar-width: none; // Firefox
-    -ms-overflow-style: none; // Internet Explorer 10+
-    
-    // Ocultar scrollbar en WebKit (Chrome, Safari, Edge)
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 }
 

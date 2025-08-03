@@ -14,6 +14,7 @@ import { useAppDispatch } from '@shared/hooks/redux';
 import { setError, setSelectedCity } from '@features/weather/store/weatherSlice';
 import type { SearchResult } from '@features/search/types';
 import { useLastUpdateTime } from '@shared/hooks/useLastUpdateTime';
+import { useAutoScroll } from '@shared/hooks/useAutoScroll';
 import { setCurrentQuery as setCurrentQuerySearch, clearHistory } from '@/features/search/store/searchSlice';
 import { cleanCityNameForWeatherAPI } from '@shared/utils';
 import '@app/styles/index.scss';
@@ -29,6 +30,9 @@ const WeatherWidget: React.FC = () => {
   
   // Hook personalizado para manejar lastUpdateTime
   const { lastUpdateTime, hasInitialData, updateLastUpdateTime } = useLastUpdateTime();
+  
+  // Hook para auto-scroll
+  const { scrollToTop } = useAutoScroll();
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -84,7 +88,10 @@ const WeatherWidget: React.FC = () => {
     dispatch(setSelectedCity(preciseSearch));
     
     setShowSuggestions(false);
-  }, [dispatch]);
+    
+    // Auto-scroll a la parte superior después de seleccionar una ciudad
+    scrollToTop(300);
+  }, [dispatch, scrollToTop]);
 
   // Handlers para el foco del SearchBar
   const handleFocus = useCallback(() => {
@@ -128,7 +135,10 @@ const WeatherWidget: React.FC = () => {
     const preciseSearch = cleanCityNameForWeatherAPI(city, country);
     dispatch(setSelectedCity(preciseSearch));
     // dispatch(setCurrentQuerySearch(city));
-  }, [dispatch]);
+    
+    // Auto-scroll a la parte superior después de seleccionar del historial
+    scrollToTop(300);
+  }, [dispatch, scrollToTop]);
 
   // Handler para limpiar historial
   const handleClearHistory = useCallback(() => {
