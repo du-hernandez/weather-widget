@@ -1,8 +1,6 @@
 // Estilos específicos para el panel del clima
 .weather-panel {
-  // ALTURA COMPLETA DE LA PANTALLA para aprovechar todo el espacio
-  height: calc(100vh - 230px); // Cambiado de 56vh a 100vh para altura completa
-  // Estilos específicos para el panel del clima
+  height: calc(100vh - 230px);
   .current-weather {
     border-radius: 16px;
     padding: 24px;
@@ -25,33 +23,6 @@
         margin: 0;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
-
-      // .weather-icon-container {
-      //   position: relative;
-      //   display: flex;
-      //   align-items: center;
-      //   justify-content: center;
-      //   width: 80px;
-      //   height: 80px;
-      //   background: rgba(255, 255, 255, 0.1);
-      //   border-radius: 50%;
-      //   backdrop-filter: blur(10px);
-      //   border: 1px solid rgba(255, 255, 255, 0.2);
-      //   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      //   transition: all 0.3s ease;
-
-      //   &:hover {
-      //     transform: scale(1.05);
-      //     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-      //   }
-
-      //   .weather-icon {
-      //     width: 60px;
-      //     height: 60px;
-      //     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-      //     transition: all 0.3s ease;
-      //   }
-      // }
     }
 
     .weather-main {

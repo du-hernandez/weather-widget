@@ -13,45 +13,30 @@
     position: relative;
     z-index: 2; // Z-index bajo para el contenedor
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 2fr auto 3fr;
     grid-template-areas: 
-      "search search map"
+      "search   search   map"
       "progress progress map"
-      "weather history map";
+      "weather  history  map";
     gap: 16px;
     padding: 16px;
     max-width: 1920px; // Limitar ancho máximo
     width: 100%; // Ocupar todo el ancho disponible
     margin: 0 auto; // Centrar el contenedor
 
-    // @media (width > 1400px) and (width <= 1700px) {
-    //   width: 1200px;
-    // }
-
-    // @media (width > 1200px) and (width <= 1400px) {
-    //   width: 1000px;
-    // }
-
-    // @media (width > 900px) and (width <= 1200px) {
-    //   width: 900px;
-    // }
-
-    // @media (width > 768px) and (width <= 900px) {
-      
-    //   width: 800px;
-    // }
-
-    @media (width <= 1300px) {
-      grid-template-areas: 
-        "search search"
+    @media (width <= 1200px) {
+      grid-template-rows: auto auto 2fr auto;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "search   search"
         "progress progress"
-        "weather history"
-        "map map";
+        "weather  history"
+        "map      map";
     }
 
     @media (width <= 768px) {
-      grid-template-rows: auto auto auto auto auto;
+      grid-template-rows: auto auto 115fr auto auto;
       grid-template-columns: 1fr;
       grid-template-areas: 
         "search"

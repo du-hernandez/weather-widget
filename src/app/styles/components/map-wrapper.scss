@@ -76,6 +76,10 @@
 
   // Contenido del mapa
   .map-content {
+    display: flex;
+    // width: 700px;
+    // width: 100%;
+    position: relative;
   }
 
   // Información de ubicación seleccionada

@@ -212,7 +212,7 @@ const WeatherWidget: React.FC = () => {
 
           {/* Barra de progreso optimizada - Grid Area: progress */}
           <ProgressBarWrapper 
-            lastUpdateTime={lastUpdateTime} 
+            lastUpdateTime={lastUpdateTime}
             hasInitialData={hasInitialData}
           />
 

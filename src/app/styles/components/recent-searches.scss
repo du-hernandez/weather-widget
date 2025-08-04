@@ -194,9 +194,7 @@
 @media (width <= 768px) {
   .recent-searches-panel {
     width: 100% !important; // Forzar ancho completo en móviles
-    height: auto;
-    min-height: 200px;
-    max-height: 40vh;
+    max-height: 400px;
     padding: 16px;
 
     .recent-searches-header {
@@ -295,8 +293,7 @@
   .recent-searches-panel {
     width: 100% !important;
     height: auto;
-    min-height: 180px;
-    max-height: 35vh;
+    min-height: 300px;
     padding: 12px;
 
     .recent-searches-header {

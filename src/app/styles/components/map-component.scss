@@ -1,6 +1,6 @@
 .map-container {
   position: relative;
-  width: 900px;
+  width: 100%;
   height: calc(100vh - 57px); // Cambiado a altura completa de la pantalla
   border-radius: 0px;
   overflow: hidden;
@@ -77,11 +77,11 @@
   }
 }
 
-@media (width <= 1300px) {
-  .map-container {
-    width: 100%;
-  }
-}
+// @media (width <= 1300px) {
+//   .map-container {
+//     width: 100%;
+//   }
+// }
 
 // Responsive design
 @media (width <= 768px) {
