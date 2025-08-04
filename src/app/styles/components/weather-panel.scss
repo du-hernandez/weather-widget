@@ -240,6 +240,12 @@
     //   overflow: auto;
     // }
 
+    // @media (width <= 1200px) {
+    //   .detail-value {
+    //     font-size: 30px;
+    //   }
+    // }
+
     // Responsive design para tablets
     @media (width <= 768px) {
       padding: 12px; // Reducir padding para más espacio
@@ -379,19 +385,19 @@
 
         .detail-item {
           padding: 8px; // Padding más reducido
-          gap: 6px; // Gap más reducido
+          gap: 15px; // Gap más reducido
 
           .detail-icon {
-            font-size: 15px; // Tamaño ligeramente menor
+            font-size: 30px; // Tamaño ligeramente menor
           }
 
           .detail-content {
             .detail-label {
-              font-size: 9px; // Tamaño ligeramente menor
+              font-size: 20px; // Tamaño ligeramente menor
             }
 
             .detail-value {
-              font-size: 12px; // Tamaño ligeramente menor
+              font-size: 20px; // Tamaño ligeramente menor
             }
           }
         }
@@ -452,19 +458,19 @@
 
         .detail-item {
           padding: 10px;
-          gap: 8px;
+          gap: 15px;
 
           .detail-icon {
-            font-size: 16px;
+            font-size: 30px;
           }
 
           .detail-content {
             .detail-label {
-              font-size: 10px;
+              font-size: 16px;
             }
 
             .detail-value {
-              font-size: 12px;
+              font-size: 16px;
             }
           }
         }
