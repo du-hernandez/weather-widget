@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
 import { ClockCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@shared/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux';
 import { selectSearchHistory } from '../store/selectors';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
 import type { SearchResult } from '../types';
+import { useMapState } from '@/features/map/hooks/useMapState';
+import { MAP_CONSTANTS } from '@/shared/utils';
+import { setSelectedLocation } from '@/features/map/store/mapSlice';
 
 interface RecentSearchesPanelProps {
   onSelectSearch?: (city: SearchResult) => void;
@@ -16,6 +19,8 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
   onClearHistory,
 }) => {
   const searchHistory = useAppSelector(selectSearchHistory);
+  const { updateCenter, updateZoom } = useMapState();
+  const dispatch = useAppDispatch();
 
   // Organizar historial de forma ascendente (más recientes primero)
   const sortedHistory = useMemo(() => {
@@ -25,6 +30,17 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
   const handleHistoryItemClick = (city: SearchResult) => {
     if (onSelectSearch) {
       onSelectSearch(city);
+      // Establece icono de ubicación en el mapa
+    dispatch(setSelectedLocation({
+      lat: city.lat,
+      lng: city.lon,
+      city: city.name,
+      country: city.country,
+      timestamp: Date.now(),
+    }));
+
+      updateCenter([city.lat, city.lon]);
+      updateZoom(MAP_CONSTANTS.DEFAULT_ZOOM);
     }
   };
 
