@@ -77,10 +77,17 @@
   }
 }
 
+@media (width <= 1300px) {
+  .map-container {
+    width: 100%;
+  }
+}
+
 // Responsive design
 @media (width <= 768px) {
   .map-container {
     height: 100vh; // Mantener altura completa en tablets
+    width: 100%;
     // AUMENTAR ALTURA MÍNIMA para tablets
     min-height: 500px; // Cambiado de 400px a 500px
     max-height: 700px; // Aumentado de 600px a 700px

@@ -265,6 +265,10 @@
     //   }
     // }
 
+    // @media (width <= 1300px) {
+    //   overflow: auto;
+    // }
+
     // Responsive design para tablets
     @media (width <= 768px) {
       padding: 12px; // Reducir padding para más espacio
