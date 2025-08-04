@@ -19,6 +19,7 @@ import { setCurrentQuery as setCurrentQuerySearch, clearHistory } from '@/featur
 import { cleanCityNameForWeatherAPI } from '@shared/utils';
 import { useLazyBackground } from '@shared/hooks/useLazyBackground';
 import '@app/styles/index.scss';
+import { useMapState } from '@/features/map/hooks/useMapState';
 
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ const WeatherWidget: React.FC = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
   const hideTimeoutRef = useRef<number | null>(null);
+  const { updateCenter, updateZoom } = useMapState();
   
   // LazyLoading para el fondo
   const { backgroundImage } = useLazyBackground({
@@ -97,25 +99,12 @@ const WeatherWidget: React.FC = () => {
   }, []);
 
   const handleSelectSuggestion = useCallback((suggestion: SearchResult) => {
-    console.warn('handleSelectSuggestion', suggestion);
-    // Usar el nombre más apropiado para la búsqueda
-    // Preferir el nombre local en español si está disponible, sino usar el nombre principal
-    // const cityName = suggestion.local_names?.es || 
-    //                  suggestion.local_names?.en || 
-    //                  suggestion.name;
-    
-    // Crear búsqueda precisa con ciudad limpia y código de país
-    // const preciseSearch = cleanCityNameForWeatherAPI(cityName, suggestion.country);
-    
-    // Actualizar la ciudad seleccionada en Redux con búsqueda precisa
-    // dispatch(setSelectedCity(preciseSearch));
-
     dispatch(setSelectedCity(suggestion));
     
     setShowSuggestions(false);
     
-    // Auto-scroll a la parte superior después de seleccionar una ciudad
-    scrollToTop(300);
+    updateCenter([suggestion.lat, suggestion.lon]);
+    updateZoom(13);
   }, [dispatch, scrollToTop]);
 
   // Handlers para el foco del SearchBar
