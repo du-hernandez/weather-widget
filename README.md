@@ -41,11 +41,11 @@ WeatherWidget ofrece una experiencia de usuario moderna e intuitiva con múltipl
 
 ### 🗺️ Búsqueda Interactiva en el Mapa
 ![Búsqueda Interactiva en Mapa](imgs/Búsqueda%20interactiva%20en%20mapa.png)
-*Mapa interactivo que permite seleccionar ubicaciones directamente, con marcadores y información geográfica detallada*
+*Mapa interactivo que permite seleccionar ubicaciones directamente, con marcadores e información geográfica detallada*
 
 ### 📍 Búsqueda Ubicada en el Mapa
 ![Búsqueda Ubicada en el Mapa](imgs/Búsqueda%20ubicada%20en%20el%20mapa.png)
-*Visualización de la ubicación seleccionada en el mapa con marcador personalizado y información de coordenadas*
+*Visualización de la ubicación seleccionada en el mapa con marcador personalizado e información de coordenadas*
 
 ## ⚙️ Configuración
 
