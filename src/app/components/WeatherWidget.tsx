@@ -15,11 +15,11 @@ import { setError, setSelectedCity } from '@features/weather/store/weatherSlice'
 import type { SearchResult } from '@features/search/types';
 import { useLastUpdateTime } from '@shared/hooks/useLastUpdateTime';
 import { useAutoScroll } from '@shared/hooks/useAutoScroll';
-import { setCurrentQuery as setCurrentQuerySearch, clearHistory } from '@/features/search/store/searchSlice';
-import { cleanCityNameForWeatherAPI } from '@shared/utils';
+import { clearHistory } from '@/features/search/store/searchSlice';
 import { useLazyBackground } from '@shared/hooks/useLazyBackground';
 import '@app/styles/index.scss';
 import { useMapState } from '@/features/map/hooks/useMapState';
+import { setSelectedLocation } from '@/features/map/store/mapSlice';
 
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -100,9 +100,17 @@ const WeatherWidget: React.FC = () => {
 
   const handleSelectSuggestion = useCallback((suggestion: SearchResult) => {
     dispatch(setSelectedCity(suggestion));
-    
     setShowSuggestions(false);
     
+    // Establece icono de ubicación en el mapa
+    dispatch(setSelectedLocation({
+      lat: suggestion.lat,
+      lng: suggestion.lon,
+      city: suggestion.name,
+      country: suggestion.country,
+      timestamp: Date.now(),
+    }));
+
     updateCenter([suggestion.lat, suggestion.lon]);
     updateZoom(13);
   }, [dispatch, scrollToTop]);
