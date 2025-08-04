@@ -39,17 +39,26 @@
 
 // Responsive design
 @media (width <=768px) {
-    .search-location-btn {
-        font-size: 12px;
-        height: 32px;
-        padding: 0 8px;
+    .search-bar-container {
+        gap: 30px;
+        .search-location-btn {
+            width: 50%;
+        }
+        .search-bar-content {
+            width: 50%;
+        }
     }
 }
 
 @media (width <=480px) {
-    .search-location-btn {
-        font-size: 11px;
-        height: 28px;
-        padding: 0 6px;
+    .search-bar-container {
+        flex-direction: column;
+        gap: 15px;
+        .search-location-btn {
+            width: 100%;
+        }
+        .search-bar-content {
+            width: 100%;
+        }
     }
 }
