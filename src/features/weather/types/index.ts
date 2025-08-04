@@ -1,3 +1,4 @@
+import type { SearchResult } from '@/features/search/types';
 import type { LoadingState } from '@shared/types';
 
 export interface WeatherData {
@@ -94,7 +95,7 @@ export interface ForecastData {
 export interface WeatherState extends LoadingState {
   currentWeather: WeatherData | null;
   forecast: ForecastData | null;
-  selectedCity: string | null;
+  selectedCity: SearchResult | null;
   selectedCoordinates: { lat: number; lon: number } | null;
   units: 'metric' | 'imperial';
 } 

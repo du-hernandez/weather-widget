@@ -2,18 +2,19 @@ import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '@shared/hooks/redux';
 import { useAppSelector } from '@shared/hooks/redux';
-import { 
-  setLoading, 
-  setError, 
-  setCurrentWeather, 
+import {
+  setLoading,
+  setError,
+  setCurrentWeather,
   setForecast,
   setSelectedCity,
   clearWeather,
 } from '../store/weatherSlice';
-import { selectSelectedCity, selectSelectedCoordinates } from '../store/selectors';
+import { selectSelectedCity } from '../store/selectors';
 import weatherApiService, { type WeatherApiParams } from '../services/weatherApi';
 import type { AppError } from '@shared/services/error-handler';
 import { createQueryKeyFactory } from '@shared/utils/query-keys';
+import type { SearchResult } from '@/features/search/types';
 
 // Extender el tipo Error para incluir appError
 interface ExtendedError extends Error {
@@ -40,14 +41,24 @@ export const useCurrentWeather = (params: WeatherApiParams) => {
   useEffect(() => {
     if (query.data) {
       dispatch(setCurrentWeather(query.data));
-      
+
       // Solo actualizar selectedCity si es diferente o si no hay ciudad seleccionada
       // Esto evita que se actualice con solo el nombre cuando ya tenemos city,country
-      if (!currentSelectedCity || (params.q && params.q !== currentSelectedCity)) {
-        dispatch(setSelectedCity(params.q || query.data.name));
+      // if (!currentSelectedCity || (params.q && params.q !== currentSelectedCity.name)) {
+      if (!currentSelectedCity ||
+        (params.lat && params.lat !== currentSelectedCity.lat &&
+          params.lon && params.lon !== currentSelectedCity.lon)
+      ) {
+        const city: SearchResult = {
+          name: query.data.name,
+          lat: query.data.coord.lat,
+          lon: query.data.coord.lon,
+          country: query.data.sys.country,
+        }
+        dispatch(setSelectedCity(city));
       }
     }
-  }, [query.data, dispatch, currentSelectedCity, params.q]);
+  }, [query.data, dispatch, currentSelectedCity]);
 
   useEffect(() => {
     if (query.error) {
@@ -104,12 +115,10 @@ export const useForecast = (params: WeatherApiParams) => {
  * Hook para obtener clima y pronóstico en paralelo
  */
 export const useWeatherAndForecast = (
-  params: WeatherApiParams, 
+  params: WeatherApiParams,
   onSuccess?: () => void
 ) => {
   const dispatch = useAppDispatch();
-  const currentSelectedCity = useAppSelector(selectSelectedCity);
-  const currentSelectedCoordinates = useAppSelector(selectSelectedCoordinates);
 
   const query = useQuery({
     queryKey: weatherKeys.custom('combined', params),
@@ -122,7 +131,7 @@ export const useWeatherAndForecast = (
     if (query.data) {
       dispatch(setCurrentWeather(query.data.currentWeather));
       dispatch(setForecast(query.data.forecast));
-      
+
       // Ejecutar callback de éxito si está definido
       if (onSuccess) {
         onSuccess();
