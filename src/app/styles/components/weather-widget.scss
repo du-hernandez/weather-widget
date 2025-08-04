@@ -16,10 +16,9 @@
     grid-template-rows: auto auto 1fr auto;
     grid-template-columns: 1fr auto;
     grid-template-areas: 
-      "search search"
-      "progress progress"
-      "weather history"
-      "map map";
+      "search search map"
+      "progress progress map"
+      "weather history map";
     gap: 16px;
     padding: 16px;
     max-width: 1400px; // Limitar ancho máximo
