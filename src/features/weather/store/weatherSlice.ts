@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { WeatherState, WeatherData, ForecastData } from '../types';
+import type { SearchResult } from '@/features/search/types';
 
 const initialState: WeatherState = {
   isLoading: false,
@@ -36,7 +37,7 @@ const weatherSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-    setSelectedCity: (state, action: PayloadAction<string>) => {
+    setSelectedCity: (state, action: PayloadAction<SearchResult>) => {
       state.selectedCity = action.payload;
       state.selectedCoordinates = null; // Limpiar coordenadas cuando se selecciona ciudad
     },

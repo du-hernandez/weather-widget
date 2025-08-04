@@ -57,7 +57,9 @@ const WeatherWidget: React.FC = () => {
     }
     // Si tenemos ciudad seleccionada, usarla
     else if (selectedCity) {
-      return { q: selectedCity };
+      // Para más exactitud buscamos por coordenadas
+      // El nombre de la ciudad puede estar repetido en un mismno país
+      return { lat: selectedCity.lat, lon: selectedCity.lon };
     }
     // Si no hay nada seleccionado, retornar objeto vacío
     return {};
@@ -95,17 +97,20 @@ const WeatherWidget: React.FC = () => {
   }, []);
 
   const handleSelectSuggestion = useCallback((suggestion: SearchResult) => {
+    console.warn('handleSelectSuggestion', suggestion);
     // Usar el nombre más apropiado para la búsqueda
     // Preferir el nombre local en español si está disponible, sino usar el nombre principal
-    const cityName = suggestion.local_names?.es || 
-                     suggestion.local_names?.en || 
-                     suggestion.name;
+    // const cityName = suggestion.local_names?.es || 
+    //                  suggestion.local_names?.en || 
+    //                  suggestion.name;
     
     // Crear búsqueda precisa con ciudad limpia y código de país
-    const preciseSearch = cleanCityNameForWeatherAPI(cityName, suggestion.country);
+    // const preciseSearch = cleanCityNameForWeatherAPI(cityName, suggestion.country);
     
     // Actualizar la ciudad seleccionada en Redux con búsqueda precisa
-    dispatch(setSelectedCity(preciseSearch));
+    // dispatch(setSelectedCity(preciseSearch));
+
+    dispatch(setSelectedCity(suggestion));
     
     setShowSuggestions(false);
     
@@ -151,10 +156,8 @@ const WeatherWidget: React.FC = () => {
   }, []);
 
   // Handler para seleccionar búsqueda del historial
-  const handleHistorySearch = useCallback((city: string, country: string) => {
-    const preciseSearch = cleanCityNameForWeatherAPI(city, country);
-    dispatch(setSelectedCity(preciseSearch));
-    // dispatch(setCurrentQuerySearch(city));
+  const handleHistorySearch = useCallback((city: SearchResult) => {
+    dispatch(setSelectedCity(city));
     
     // Auto-scroll a la parte superior después de seleccionar del historial
     scrollToTop(300);

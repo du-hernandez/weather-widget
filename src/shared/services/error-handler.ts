@@ -19,7 +19,8 @@ export interface AppError {
 /**
  * Servicio centralizado para manejo de errores
  */
-class ErrorHandlerService {
+class ErrorHandlerService  {
+
   /**
    * Convierte errores de red en mensajes amigables
    */
