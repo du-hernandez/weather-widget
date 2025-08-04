@@ -1,26 +1,26 @@
 import React from 'react';
-import { Button } from 'antd';
-import { ClearOutlined } from '@ant-design/icons';
+// import { Button } from 'antd';
+// import { ClearOutlined } from '@ant-design/icons';
 import { MapComponent } from './MapComponent';
-import { useMapState } from '../hooks/useMapState';
-import { useMapSelection } from '../hooks/useMapSelection';
-import { LocationButton } from '@/app/components/LocationButton';
+// import { useMapState } from '../hooks/useMapState';
+// import { useMapSelection } from '../hooks/useMapSelection';
+// import { LocationButton } from '@/app/components/LocationButton';
 
 
 /**
  * Componente wrapper que integra el mapa con controles
  */
 export const MapWrapper: React.FC = () => {
-  const { hasSelectedLocation } = useMapState();
-  const { clearSelection } = useMapSelection();
+  // const { hasSelectedLocation } = useMapState();
+  // const { clearSelection } = useMapSelection();
 
-  const handleClearSelection = () => {
-    clearSelection();
-  };
+  // const handleClearSelection = () => {
+  //   clearSelection();
+  // };
 
   return (
     <div className="map-wrapper-container">
-      {/* Header con efecto glass */}
+      {/* Header con efecto glass
       <div className="glass-effect map-header">
         <div className="map-header-content">
           <div className="map-header-title">
@@ -44,7 +44,7 @@ export const MapWrapper: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Contenido del mapa */}
       <div className="map-content">
