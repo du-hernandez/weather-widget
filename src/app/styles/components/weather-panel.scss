@@ -61,7 +61,7 @@
       }
 
       .weather-description {
-        text-align: right;
+        text-align: left;
         color: var(--text-primary);
         font-size: 16px;
         font-weight: 500;
@@ -273,38 +273,38 @@
         }
       }
 
-      .weather-main {
-        flex-direction: row; // Mantener horizontal
-        text-align: left; // Alinear a la izquierda
-        gap: 12px; // Reducir gap
-        justify-content: space-between; // Distribuir elementos
+      // .weather-main {
+      //   flex-direction: row; // Mantener horizontal
+      //   text-align: left; // Alinear a la izquierda
+      //   gap: 12px; // Reducir gap
+      //   justify-content: space-between; // Distribuir elementos
 
-        .temperature-section {
-          order: 1; // Temperatura a la izquierda
+      //   .temperature-section {
+      //     order: 1; // Temperatura a la izquierda
 
-          .current-temperature {
-            font-size: 32px; // Reducir tamaño
-            margin-bottom: 6px; // Reducir margen
-          }
+      //     .current-temperature {
+      //       font-size: 32px; // Reducir tamaño
+      //       margin-bottom: 6px; // Reducir margen
+      //     }
 
-          .city-info {
-            .city-name {
-              font-size: 13px; // Reducir tamaño
-            }
+      //     .city-info {
+      //       .city-name {
+      //         font-size: 13px; // Reducir tamaño
+      //       }
 
-            .country-code {
-              font-size: 11px; // Reducir tamaño
-            }
-          }
-        }
+      //       .country-code {
+      //         font-size: 11px; // Reducir tamaño
+      //       }
+      //     }
+      //   }
 
-        .weather-description {
-          text-align: right; // Descripción a la derecha
-          order: 2;
-          font-size: 13px; // Reducir tamaño
-          align-self: center; // Centrar verticalmente
-        }
-      }
+      //   .weather-description {
+      //     text-align: right; // Descripción a la derecha
+      //     order: 2;
+      //     font-size: 13px; // Reducir tamaño
+      //     align-self: center; // Centrar verticalmente
+      //   }
+      // }
 
       .weather-details {
         grid-template-columns: 1fr;
@@ -376,7 +376,8 @@
         }
 
         .weather-description {
-          font-size: 12px; // Tamaño ligeramente menor
+          font-size: 20px; // Tamaño ligeramente menor
+          margin-right: 0px;
         }
       }
 
@@ -449,6 +450,7 @@
 
         .weather-description {
           font-size: 12px;
+          margin-right: 10px;
         }
       }
 
