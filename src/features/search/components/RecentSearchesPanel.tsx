@@ -31,13 +31,13 @@ const RecentSearchesPanel: React.FC<RecentSearchesPanelProps> = ({
     if (onSelectSearch) {
       onSelectSearch(city);
       // Establece icono de ubicación en el mapa
-    dispatch(setSelectedLocation({
-      lat: city.lat,
-      lng: city.lon,
-      city: city.name,
-      country: city.country,
-      timestamp: Date.now(),
-    }));
+      dispatch(setSelectedLocation({
+        lat: city.lat,
+        lng: city.lon,
+        city: city.name,
+        country: city.country,
+        timestamp: Date.now(),
+      }));
 
       updateCenter([city.lat, city.lon]);
       updateZoom(MAP_CONSTANTS.DEFAULT_ZOOM);
