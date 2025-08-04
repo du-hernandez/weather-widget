@@ -8,8 +8,8 @@ import {
   addToHistory,
   clearSearch 
 } from '../store/searchSlice';
-import searchApiService from '../services/searchApi';
-import type { SearchApiParams, ReverseGeocodingParams } from '../services/searchApi';
+import searchApiService from '@shared/services/searchApi';
+import type { SearchApiParams, ReverseGeocodingParams } from '@shared/services/searchApi';
 import type { SearchResult } from '../types';
 import type { AppError } from '@shared/services/error-handler';
 import { createQueryKeyFactory } from '@shared/utils/query-keys';

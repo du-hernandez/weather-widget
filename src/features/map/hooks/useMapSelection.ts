@@ -4,6 +4,7 @@ import { addToHistory } from '@features/search/store/searchSlice';
 import { setSelectedCoordinates } from '@features/weather/store/weatherSlice';
 import { useAutoScroll } from '@shared/hooks/useAutoScroll';
 import type { SelectedLocation } from '../types';
+import searchApiService from '@/shared/services/searchApi';
 
 /**
  * Hook para manejar la selección de ubicación en el mapa
@@ -18,9 +19,10 @@ export const useMapSelection = () => {
   const handleMapClick = async (lat: number, lng: number) => {
     console.log('Coordenadas del evento:', { lat, lng });
 
+
     try {
       dispatch(setLoading(true));
-      
+
       // Crear ubicación seleccionada
       const selectedLocation: SelectedLocation = {
         lat,
@@ -28,19 +30,16 @@ export const useMapSelection = () => {
         timestamp: Date.now(),
       };
 
-      dispatch(setSelectedLocation(selectedLocation));
-
       // Usar coordenadas directamente para el clima
       dispatch(setSelectedCoordinates({ lat, lon: lng }));
 
       // Buscar información de la ciudad por coordenadas usando el servicio
       try {
-        const searchApiService = (await import('@features/search/services/searchApi')).default;
         const cities = await searchApiService.getCityByCoordinates({ lat, lon: lng });
-        
+
         if (cities && cities.length > 0) {
           const city = cities[0];
-          
+
           // Actualizar ubicación con información de la ciudad
           const locationWithCity: SelectedLocation = {
             ...selectedLocation,
@@ -49,7 +48,7 @@ export const useMapSelection = () => {
           };
 
           dispatch(setSelectedLocation(locationWithCity));
-          
+
           // Agregar al historial de búsquedas
           dispatch(addToHistory(city));
         }
@@ -59,7 +58,6 @@ export const useMapSelection = () => {
       }
 
       dispatch(setLoading(false));
-      
       // Auto-scroll a la parte superior después de completar la búsqueda
       scrollToTop(300);
     } catch (error) {
