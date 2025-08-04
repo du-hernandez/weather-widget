@@ -4,6 +4,7 @@ import { AimOutlined } from '@ant-design/icons';
 import { useGeolocation } from '@shared/hooks/useGeolocation';
 import { useMapState } from '@features/map/hooks/useMapState';
 import { useMapSelection } from '@features/map/hooks/useMapSelection';
+import { MAP_CONSTANTS } from '@/shared/utils';
 
 interface LocationButtonProps {
   size?: 'small' | 'middle' | 'large';
@@ -47,7 +48,7 @@ export const LocationButton: React.FC<LocationButtonProps> = ({
       } else {
         // Comportamiento por defecto: centrar mapa y seleccionar ubicación
         updateCenter([position.latitude, position.longitude]);
-        updateZoom(12);
+        updateZoom(MAP_CONSTANTS.DEFAULT_ZOOM);
         await handleMapClick(position.latitude, position.longitude);
       }
       

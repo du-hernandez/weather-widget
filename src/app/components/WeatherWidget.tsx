@@ -20,6 +20,7 @@ import { useLazyBackground } from '@shared/hooks/useLazyBackground';
 import '@app/styles/index.scss';
 import { useMapState } from '@/features/map/hooks/useMapState';
 import { setSelectedLocation } from '@/features/map/store/mapSlice';
+import { MAP_CONSTANTS } from '@/shared/utils';
 
 const WeatherWidget: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -112,7 +113,7 @@ const WeatherWidget: React.FC = () => {
     }));
 
     updateCenter([suggestion.lat, suggestion.lon]);
-    updateZoom(13);
+    updateZoom(MAP_CONSTANTS.DEFAULT_ZOOM);
   }, [dispatch, scrollToTop]);
 
   // Handlers para el foco del SearchBar

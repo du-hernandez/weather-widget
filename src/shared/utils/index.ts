@@ -1,5 +1,8 @@
 // Utilidades compartidas
 
+// Exportar constantes
+export * from './constants';
+
 /**
  * Formatea la temperatura según las unidades
  */
