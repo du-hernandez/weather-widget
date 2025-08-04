@@ -73,7 +73,8 @@ export const MapComponent: React.FC = () => {
       <MapContainer
         center={center}
         zoom={zoom}
-        style={{ height: '400px', width: '100%' }}
+        // ALTURA COMPLETA DE LA PANTALLA para aprovechar todo el espacio
+        style={{ height: '100%', width: '100%' }} // Cambiado a altura completa
         className="weather-map"
       >
         <TileLayer

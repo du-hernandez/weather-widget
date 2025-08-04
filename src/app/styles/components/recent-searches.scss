@@ -12,7 +12,7 @@
   box-shadow: var(--glass-shadow);
   transition: all 0.3s ease;
   min-height: 0; // Importante para flexbox
-  height: 56vh;
+  height: calc(100vh - 230px); // Cambiado de 56vh a 100vh para altura completa
   width: 300px;
 
   // &:hover {

@@ -1,6 +1,7 @@
 // Estilos específicos para el panel del clima
 .weather-panel {
-  height: 56vh;
+  // ALTURA COMPLETA DE LA PANTALLA para aprovechar todo el espacio
+  height: calc(100vh - 230px); // Cambiado de 56vh a 100vh para altura completa
   // Estilos específicos para el panel del clima
   .current-weather {
     border-radius: 16px;

@@ -76,9 +76,6 @@
 
   // Contenido del mapa
   .map-content {
-    flex: 1;
-    min-height: 500px; // Altura mínima para el contenedor
-    padding: 0; // Sin padding para que el mapa ocupe todo el espacio
   }
 
   // Información de ubicación seleccionada
@@ -119,6 +116,7 @@
 @media (width <= 768px) {
   .map-wrapper-container {
     margin: 12px 0;
+    height: 100vh; // Mantener altura completa en tablets
 
     .map-header {
       padding: 12px 16px;
@@ -143,7 +141,9 @@
     }
 
     .map-content {
-      min-height: 400px; // Altura mínima para tablets
+      // AUMENTAR ALTURA MÍNIMA para tablets
+      height: calc(100vh - 100px); // Ajustar para tablets
+      min-height: 500px; // Cambiado de 400px a 500px
     }
 
     .selected-location-info {
@@ -154,6 +154,8 @@
 
 @media (width <= 480px) {
   .map-wrapper-container {
+    height: 100vh; // Mantener altura completa en móviles
+
     .map-header {
       padding: 8px 12px;
 
@@ -181,7 +183,9 @@
     }
 
     .map-content {
-      min-height: 300px; // Altura mínima para móviles
+      // AUMENTAR ALTURA MÍNIMA para móviles
+      height: calc(100vh - 80px); // Ajustar para móviles
+      min-height: 400px; // Cambiado de 300px a 400px
     }
 
     .selected-location-info {
