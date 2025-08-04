@@ -2,7 +2,7 @@ import { useAppDispatch } from '@shared/hooks/redux';
 import { setSelectedLocation, setLoading, setError } from '../store/mapSlice';
 import { addToHistory } from '@features/search/store/searchSlice';
 import { setSelectedCoordinates } from '@features/weather/store/weatherSlice';
-import { useAutoScroll } from '@shared/hooks/useAutoScroll';
+import { useScrollToTop } from '@/shared/hooks/useAutoScroll';
 import type { SelectedLocation } from '../types';
 import searchApiService from '@/shared/services/searchApi';
 
@@ -11,15 +11,12 @@ import searchApiService from '@/shared/services/searchApi';
  */
 export const useMapSelection = () => {
   const dispatch = useAppDispatch();
-  const { scrollToTop } = useAutoScroll();
+  const { scrollToTop } = useScrollToTop();
 
   /**
    * Manejar click en el mapa
    */
   const handleMapClick = async (lat: number, lng: number) => {
-    console.log('Coordenadas del evento:', { lat, lng });
-
-
     try {
       dispatch(setLoading(true));
 

@@ -1,5 +1,5 @@
 import httpClient from '@shared/services/http-client';
-import type { SearchResult } from '../types';
+import type { SearchResult } from '@features/search/types';
 
 export interface SearchApiParams {
   q: string;
