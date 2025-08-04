@@ -407,7 +407,6 @@
     // Responsive design para móviles
     @media (width <= 480px) {
       padding: 12px;
-
       .weather-header {
         // margin-bottom: 16px;
         gap: 8px;
@@ -477,4 +476,11 @@
       }
     }
   }
-} 
+}
+
+@media (width <= 480px) {
+  .weather-panel {
+    height: 100%;
+    min-height: 300px;
+  }
+}
