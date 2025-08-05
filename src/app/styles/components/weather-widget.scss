@@ -73,7 +73,6 @@
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0; // Z-index más bajo para el fondo
-  transition: background-image 0.5s ease-in-out; // Transición suave para LazyLoading
 
   // Overlay sutil para mejorar legibilidad
   &::before {
@@ -84,5 +83,28 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.2);
+    z-index: 1; // Asegurar que esté por encima del fondo
+  }
+
+  // Capa para la imagen con transición
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0; // Inicialmente invisible
+    transition: opacity 0.5s ease-in-out; // Transición suave
+    z-index: 0; // Detrás del overlay
+  }
+
+  // Cuando la imagen está cargada, mostrar con transición
+  &.image-loaded::after {
+    opacity: 1;
   }
 } 
