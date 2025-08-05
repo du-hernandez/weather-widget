@@ -1,0 +1,304 @@
+// Contenedor del botón hamburguesa
+.hamburger-button-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .hamburger-button {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    box-shadow: var(--glass-shadow);
+    transition: all 0.3s ease;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+          &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent-color);
+        transform: scale(1.05);
+        box-shadow: var(--glass-shadow);
+      }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    .anticon {
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    // Animación del icono al abrir/cerrar
+    &:has(.anticon-close) {
+      .anticon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+// Estilos para el drawer móvil
+.mobile-history-drawer {
+  .ant-drawer-content {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-backdrop) !important;
+    border-right: 1px solid var(--glass-border);
+  }
+
+  .ant-drawer-content-wrapper {
+    box-shadow: var(--glass-shadow);
+    z-index: 1001; // Z-index específico para el drawer
+  }
+
+  .ant-drawer-body {
+    padding: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: transparent !important;
+  }
+  
+  /* ------------------------------------------------------------ */
+
+  // Personalizar el panel dentro del drawer
+  .recent-searches-panel {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+
+
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(15px) !important;
+    padding: 20px 16px 16px 16px !important;
+    color: white !important;
+    min-height: 200px !important;
+
+    .recent-searches-header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      .recent-searches-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: white !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .clear-history-button {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+        color: white !important;
+        padding: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: var(--accent-color);
+          background: rgba(255, 255, 255, 0.3);
+          border-color: var(--accent-color);
+        }
+
+        svg {
+          font-size: 16px;
+          color: inherit;
+        }
+      }
+    }
+
+    .recent-searches-list {
+      flex: 1;
+      overflow: hidden;
+
+      .empty-history {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: rgba(255, 255, 255, 0.8) !important;
+        font-style: italic;
+        text-align: center;
+        padding: 40px 20px;
+
+        p {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+
+      .history-items-container {
+        .history-item {
+          padding: 16px;
+          margin-bottom: 12px;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          transition: all 0.2s ease;
+          color: white !important;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: var(--accent-color);
+            transform: translateX(4px);
+          }
+
+          .history-item-icon {
+            color: var(--accent-color);
+            font-size: 18px;
+            width: 28px;
+            height: 28px;
+          }
+
+          .history-item-content {
+            .history-item-city {
+              font-size: 16px;
+              font-weight: 500;
+              margin-bottom: 6px;
+              color: white !important;
+            }
+
+            .history-item-details {
+              font-size: 14px;
+              gap: 12px;
+              color: rgba(255, 255, 255, 0.8) !important;
+
+              .history-item-country {
+                font-weight: 500;
+                color: rgba(255, 255, 255, 0.8) !important;
+              }
+
+              .history-item-time {
+                opacity: 0.8;
+                color: rgba(255, 255, 255, 0.8) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments para el botón hamburguesa
+@media (width <= 480px) {
+  .hamburger-button-container {
+    top: 16px;
+    left: 16px;
+
+    .hamburger-button {
+      width: 44px;
+      height: 44px;
+
+      .anticon {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .mobile-history-drawer {
+    .recent-searches-panel {
+      padding: 16px 12px 12px 12px !important;
+
+      .recent-searches-header {
+        margin-bottom: 16px;
+
+        .recent-searches-title {
+          font-size: 18px;
+          color: white !important;
+        }
+
+        .clear-history-button {
+          padding: 6px;
+          color: white !important;
+
+          svg {
+            font-size: 14px;
+            color: inherit;
+          }
+        }
+      }
+
+      .recent-searches-list {
+        .history-items-container {
+          .history-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            color: white !important;
+
+            .history-item-icon {
+              font-size: 16px;
+              width: 24px;
+              height: 24px;
+            }
+
+            .history-item-content {
+              .history-item-city {
+                font-size: 14px;
+                margin-bottom: 4px;
+                color: white !important;
+              }
+
+              .history-item-details {
+                font-size: 12px;
+                gap: 8px;
+                color: rgba(255, 255, 255, 0.8) !important;
+
+                .history-item-country {
+                  color: rgba(255, 255, 255, 0.8) !important;
+                }
+
+                .history-item-time {
+                  color: rgba(255, 255, 255, 0.8) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones para el drawer
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.mobile-history-drawer {
+  .ant-drawer-content-wrapper {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  &.ant-drawer-closing {
+    .ant-drawer-content-wrapper {
+      animation: slideOut 0.3s ease-in;
+    }
+  }
+} 
