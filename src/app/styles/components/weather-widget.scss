@@ -75,7 +75,7 @@
   z-index: 0; // Z-index más bajo para el fondo
 
   // Overlay sutil para mejorar legibilidad
-  &::before {
+  &:before {
     content: '';
     position: absolute;
     top: 0;
@@ -87,7 +87,7 @@
   }
 
   // Capa para la imagen con transición
-  &::after {
+  &:after {
     content: '';
     position: absolute;
     top: 0;
