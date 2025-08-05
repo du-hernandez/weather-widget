@@ -23,7 +23,7 @@ export const selectHasSearchHistory = createSelector(
 
 export const selectRecentSearchHistory = createSelector(
   [selectSearchHistory],
-  (searchHistory) => searchHistory // Solo los 5 más recientes
+  (searchHistory) => searchHistory.slice(0, 5) // Transformación real: solo los 5 más recientes
 );
 
 export const selectSearchHistoryByCity = createSelector(

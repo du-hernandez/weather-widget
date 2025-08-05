@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-import { useAppSelector } from '@shared/hooks/redux';
 import { useSearchCities } from './useSearch';
-import { selectRecentSearchHistory } from '../store/selectors';
 import { useQueryClient } from '@tanstack/react-query';
 import { serializeParams } from '@shared/utils/query-keys';
 
@@ -11,7 +9,7 @@ import { serializeParams } from '@shared/utils/query-keys';
  * @returns Sugerencias y fuente de datos
  */
 export const useSmartSuggestions = (query: string) => {
-  const recentHistory = useAppSelector(selectRecentSearchHistory);
+  // const recentHistory = useAppSelector(selectRecentSearchHistory);
   const queryClient = useQueryClient();
   
   // Buscar en API si hay query válido (2+ caracteres)
@@ -40,13 +38,13 @@ export const useSmartSuggestions = (query: string) => {
 
   const suggestions = apiResults || [];
 
-  const source = recentHistory.length > 0 ? 'history' : 'api';
+  const source = 'api';
 
   return {
     suggestions,
     source,
     isLoading: shouldSearchAPI ? isLoading : false,
-    hasHistory: recentHistory.length > 0,
+    hasHistory: false,
     hasApiResults: (apiResults?.length || 0) > 0,
   };
 }; 
