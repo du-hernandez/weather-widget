@@ -32,7 +32,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
           top: `${rect.bottom + 8}px`,
           left: `${rect.left}px`,
           width: `${rect.width}px`,
-          zIndex: 1002, // Z-index específico para estar por encima del drawer
+          zIndex: 999999, // Z-index extremadamente alto
         });
       }
     }
@@ -47,23 +47,10 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
     onSelectSuggestion(suggestion);
   };
 
-  // Prevenir que los eventos se propaguen al contenido detrás
-  const handleMouseEnter = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleMouseEnter = () => {
   };
 
-  const handleMouseLeave = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  // Prevenir scroll del contenido detrás
-  const handleWheel = (e: React.WheelEvent) => {
-    e.stopPropagation();
-  };
-
-  // Prevenir clics en el contenido detrás
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleMouseLeave = () => {
   };
 
   const renderSuggestionItem = (item: SearchResult, index: number) => {
@@ -71,10 +58,7 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
       <div
         key={`${item.name}-${item.country}-${index}`}
         className="suggestion-item"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleSuggestionClick(item);
-        }}
+        onClick={() => handleSuggestionClick(item)}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -104,8 +88,6 @@ const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
       ref={suggestionsRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onWheel={handleWheel}
-      onClick={handleClick}
     >
       {hasApiResults && suggestions.length > 0 && (
         <>

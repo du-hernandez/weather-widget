@@ -193,12 +193,62 @@
 // Responsive adjustments
 @media (width <= 768px) {
   .recent-searches-panel {
-    display: none !important; // Ocultar panel en móviles, se muestra en drawer
-  }
-  
-  // Excepción: mostrar el panel cuando está dentro del drawer
-  .mobile-history-drawer .recent-searches-panel {
-    display: block !important;
+    width: 100% !important; // Forzar ancho completo en móviles
+    max-height: 400px;
+    padding: 16px;
+
+    .recent-searches-header {
+      margin-bottom: 12px;
+
+      .recent-searches-title {
+        font-size: 16px;
+      }
+
+      .clear-history-button {
+        padding: 6px;
+        
+        svg {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .recent-searches-list {
+      .history-items-container {
+        .history-item {
+          padding: 10px;
+          margin-bottom: 6px;
+
+          .history-item-icon {
+            font-size: 14px;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+          }
+
+          .history-item-content {
+            .history-item-city {
+              margin-bottom: 0px;
+            }
+
+            .history-item-details {
+              font-size: 11px;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 2px;
+
+              .history-item-country {
+                font-weight: 500;
+              }
+
+              .history-item-time {
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -238,4 +288,63 @@
   }
 } 
 
- 
+@media (width <= 480px) {
+  .recent-searches-panel {
+    width: 100% !important;
+    height: auto;
+    min-height: 300px;
+    padding: 12px;
+
+    .recent-searches-header {
+      margin-bottom: 10px;
+
+      .recent-searches-title {
+        font-size: 14px;
+      }
+
+      .clear-history-button {
+        padding: 4px;
+        
+        svg {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .recent-searches-list {
+      .history-items-container {
+        .history-item {
+          padding: 8px;
+          margin-bottom: 4px;
+
+          .history-item-icon {
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+          }
+
+          .history-item-content {
+            .history-item-city {
+              font-size: 12px;
+              margin-bottom: 1px;
+            }
+
+            .history-item-details {
+              font-size: 10px;
+              gap: 1px;
+
+              .history-item-country {
+                font-weight: 500;
+              }
+
+              .history-item-time {
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 
