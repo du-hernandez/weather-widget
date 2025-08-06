@@ -13,6 +13,19 @@ import type { WeatherLayer } from '../types/layers';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const WEATHER_LAYERS: Record<string, WeatherLayer> = {
+  // Capas topográficas (no meteorológicas, pero útiles para contexto)
+  contours: {
+    id: 'contours',
+    name: 'Líneas de Altura',
+    url: `https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png`,
+    attribution: '&copy; <a href="https://opentopomap.org">OpenTopoMap</a> contributors, SRTM',
+    opacity: 0.7,
+    visible: false,
+    zIndex: 5, // Debajo de capas meteorológicas
+    description: 'Líneas de contorno topográficas y relieve del terreno'
+  },
+  
+  // Capas meteorológicas de OpenWeatherMap
   precipitation: {
     id: 'precipitation',
     name: 'Precipitación',
@@ -52,6 +65,16 @@ export const WEATHER_LAYERS: Record<string, WeatherLayer> = {
     visible: false,
     zIndex: 13,
     description: 'Velocidad y dirección del viento'
+  },
+  pressure: {
+    id: 'pressure',
+    name: 'Presión Atmosférica',
+    url: `https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${API_KEY}`,
+    attribution: '&copy; OpenWeatherMap',
+    opacity: 0.6,
+    visible: false,
+    zIndex: 14,
+    description: 'Presión atmosférica a nivel del mar'
   }
 };
 

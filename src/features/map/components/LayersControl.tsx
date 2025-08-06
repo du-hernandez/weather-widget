@@ -54,7 +54,7 @@ export const LayersControl: React.FC = () => {
       
       <div className="layers-control__content">
         {layers.map(layer => (
-          <div key={layer.id} className="layer-item">
+          <div key={layer.id} className="layer-item" data-layer-type={layer.id}>
             <div className="layer-item__header">
               <label className="layer-toggle">
                 <input

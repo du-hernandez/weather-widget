@@ -82,6 +82,17 @@
   border-radius: 8px;
   border: 1px solid rgba(226, 232, 240, 0.8);
 
+  // Estilo especial para capas topográficas
+  &[data-layer-type="contours"] {
+    background: rgba(245, 240, 235, 0.8);
+    border-color: rgba(139, 120, 93, 0.3);
+    
+    .layer-toggle__label {
+      color: #8B5A3C;
+      font-weight: 600;
+    }
+  }
+
   &__header {
     display: flex;
     align-items: center;

@@ -14,6 +14,7 @@ export interface WeatherLayer {
 }
 
 export type WeatherLayerType = 
+  | 'contours'      // Líneas de altura topográficas
   | 'precipitation' 
   | 'temperature' 
   | 'clouds' 
