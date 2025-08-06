@@ -5,6 +5,8 @@ import type { LeafletMouseEvent } from 'leaflet';
 import { useMapSelection } from '../hooks/useMapSelection';
 import { useMapState } from '../hooks/useMapState';
 import { MapUpdater } from './MapUpdater';
+import { WeatherLayers } from './WeatherLayers';
+import { LayersControl } from './LayersControl';
 import 'leaflet/dist/leaflet.css';
 
 // Fix para los iconos de Leaflet en React
@@ -83,6 +85,7 @@ export const MapComponent: React.FC = () => {
         />
         <MapEvents />
         <MapUpdater />
+        <WeatherLayers />
         {selectedMarker}
       </MapContainer>
       
@@ -97,6 +100,8 @@ export const MapComponent: React.FC = () => {
           <p>Error: {error}</p>
         </div>
       )}
+      
+      <LayersControl />
     </div>
   );
 }; 

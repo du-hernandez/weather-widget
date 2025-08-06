@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { MapState, SelectedLocation } from '../types';
+import layersReducer from './layersSlice';
+import { DEFAULT_LAYERS } from '../config/weatherLayers';
 
 const initialState: MapState = {
   center: [0, 0], // Centro del mundo
@@ -8,6 +10,12 @@ const initialState: MapState = {
   selectedLocation: null,
   isLoading: false,
   error: null,
+  layers: {
+    availableLayers: DEFAULT_LAYERS,
+    activeLayers: [],
+    isLoading: false,
+    error: null,
+  },
 };
 
 const mapSlice = createSlice({
@@ -37,6 +45,16 @@ const mapSlice = createSlice({
       state.selectedLocation = null;
       state.error = null;
     },
+  },
+  extraReducers: (builder) => {
+    // Integrar las acciones de capas dentro del slice del mapa
+    builder.addMatcher(
+      (action) => action.type.startsWith('map/layers/'),
+      (state, action) => {
+        // Delegar todas las acciones de 'map/layers/' al reducer de capas
+        state.layers = layersReducer(state.layers, action);
+      }
+    );
   },
 });
 

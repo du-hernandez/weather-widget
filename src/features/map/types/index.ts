@@ -1,4 +1,5 @@
 import type { LatLng } from 'leaflet';
+import type { LayersState } from './layers';
 
 export interface MapState {
   center: [number, number];
@@ -6,6 +7,7 @@ export interface MapState {
   selectedLocation: SelectedLocation | null;
   isLoading: boolean;
   error: string | null;
+  layers: LayersState;
 }
 
 export interface SelectedLocation {
