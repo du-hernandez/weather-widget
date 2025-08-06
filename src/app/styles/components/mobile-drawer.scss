@@ -83,12 +83,12 @@
 
 // Contenido del drawer
 .mobile-drawer-content {
-  flex: 1;
+  display: flex;
   overflow: hidden;
   padding: 0;
 
   .recent-searches-panel {
-    height: 100%;
+    height: 102%;
     width: 100%;
     max-width: none;
     border-radius: 0;
@@ -238,6 +238,21 @@
   }
   to {
     transform: translateY(100%);
+  }
+}
+
+@media (width <= 768px) {
+  .mobile-drawer-content {
+
+    display: flex;
+  overflow: hidden;
+  padding: 0;
+  height: 100%;
+  
+  .recent-searches-panel {
+      height: 102%;
+      max-height: none;
+    }
   }
 }
 
