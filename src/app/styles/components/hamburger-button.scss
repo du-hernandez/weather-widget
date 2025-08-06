@@ -1,31 +1,38 @@
 .hamburger-button {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  background: var(--glass-bg);
+  position: absolute;
+  top: 28px;
+  left: 25px;
+  z-index: 2;
+
+  // background: var(--glass-bg);
+  background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: var(--glass-backdrop);
   border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  // border-radius: 50%;
+  
+  width: 36px;
+  height: 36px;
+  padding: 0px !important;
+  margin: 0px !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: var(--glass-shadow);
   color: var(--text-primary);
   font-size: 18px;
 
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: var(--glass-shadow-hover);
-    background: rgba(255, 255, 255, 0.15);
+  .hamburger-button-icon {
+    font-size: 20px;
+    padding: 0px !important;
+    margin: 0px !important;
   }
 
-  &:active {
-    transform: scale(0.95);
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: var(--glass-shadow-hover) !important;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
   }
 
   // Solo mostrar en móviles
@@ -35,10 +42,9 @@
 
   // Ajustes para pantallas muy pequeñas
   @media (width <= 480px) {
-    top: 16px;
-    right: 16px;
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
+    top: 70px;
+    left: 28px;
+    width: 36px;
+    height: 36px;
   }
 } 

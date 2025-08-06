@@ -61,7 +61,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
       
       {/* Drawer personalizado */}
       <div className={`mobile-drawer-container ${isClosing ? 'closing' : ''}`}>
-        <div className="mobile-drawer-header">
+        {/* <div className="mobile-drawer-header">
           <h3 className="mobile-drawer-title">
             Búsquedas recientes
           </h3>
@@ -72,7 +72,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
           >
             <CloseOutlined />
           </button>
-        </div>
+        </div> */}
         
         <div className="mobile-drawer-content">
           <RecentSearchesPanel

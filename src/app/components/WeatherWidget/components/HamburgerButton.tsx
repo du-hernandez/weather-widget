@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuOutlined } from '@ant-design/icons';
+import { ClockCircleOutlined } from '@ant-design/icons';
 
 interface HamburgerButtonProps {
   onToggle: () => void;
@@ -17,7 +17,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
       aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
       title={isOpen ? 'Cerrar menú' : 'Abrir menú'}
     >
-      <MenuOutlined />
+      <ClockCircleOutlined className="hamburger-button-icon" />
     </button>
   );
 };

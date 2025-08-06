@@ -41,10 +41,12 @@
 @media (width <=768px) {
     .search-bar-container {
         gap: 30px;
-        .search-location-btn {
-            width: 50%;
-        }
         .search-bar-content {
+            width: 50%;
+            // Se ubica el botón de búsquedas recientes
+            margin-left: 50px;
+        }
+        .search-location-btn {
             width: 50%;
         }
     }
@@ -54,11 +56,15 @@
     .search-bar-container {
         flex-direction: column;
         gap: 15px;
-        .search-location-btn {
-            width: 100%;
-        }
         .search-bar-content {
             width: 100%;
+            // Se ubica el botón de búsquedas recientes
+            margin-left: 0;
+        }
+        .search-location-btn {
+            width: 45%;
+            align-self: flex-end;
+            // Se ubica el botón de búsquedas recientes
         }
     }
 }
