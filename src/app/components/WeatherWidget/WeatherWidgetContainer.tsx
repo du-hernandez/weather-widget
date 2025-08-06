@@ -4,16 +4,27 @@ import { useSearchManagement } from './hooks/useSearchManagement';
 import { useHistoryManagement } from './hooks/useHistoryManagement';
 import { useWeatherCoordination } from './hooks/useWeatherCoordination';
 import { useErrorHandling } from './hooks/useErrorHandling';
+import { useMobileDrawer } from './hooks/useMobileDrawer';
 import SearchSection from './sections/SearchSection';
 import WeatherSection from './sections/WeatherSection';
 import HistorySection from './sections/HistorySection';
 import MapSection from './sections/MapSection';
+import HamburgerButton from './components/HamburgerButton';
+import MobileDrawer from './components/MobileDrawer';
 import BackgroundManager from './managers/BackgroundManager';
 import '@app/styles/index.scss';
 
 const WeatherWidgetContainer: React.FC = () => {
   // Hook para scroll
   const { scrollToTop, scrollToTopImmediate } = useScrollToTop();
+
+  // Hook para el drawer móvil
+  const {
+    isDrawerOpen,
+    isMobile,
+    closeDrawer,
+    toggleDrawer,
+  } = useMobileDrawer();
 
   // Hooks especializados
   const {
@@ -30,6 +41,14 @@ const WeatherWidgetContainer: React.FC = () => {
     handleClearHistory,
   } = useHistoryManagement({ onScrollToTop: scrollToTop });
 
+  // Wrapper para cerrar el drawer al seleccionar una ciudad
+  const handleHistorySearchWithClose = (city: any) => {
+    handleHistorySearch(city);
+    if (isMobile) {
+      closeDrawer();
+    }
+  };
+
   const {
     lastUpdateTime,
     hasInitialData,
@@ -43,6 +62,12 @@ const WeatherWidgetContainer: React.FC = () => {
       
       {/* Fondo que cubre toda la pantalla con LazyLoading */}
       <BackgroundManager />
+      
+      {/* Botón hamburguesa para móviles */}
+      <HamburgerButton
+        onToggle={toggleDrawer}
+        isOpen={isDrawerOpen}
+      />
       
       <div className="weather-widget">
         {/* Anchor point para scroll */}
@@ -75,16 +100,26 @@ const WeatherWidgetContainer: React.FC = () => {
             hasInitialData={hasInitialData}
           />
 
-          {/* Sección del historial */}
-          <HistorySection
-            onSelectSearch={handleHistorySearch}
-            onClearHistory={handleClearHistory}
-          />
+          {/* Sección del historial - solo mostrar en desktop */}
+          {!isMobile && (
+            <HistorySection
+              onSelectSearch={handleHistorySearch}
+              onClearHistory={handleClearHistory}
+            />
+          )}
 
           {/* Sección del mapa */}
           <MapSection />
         </div>
       </div>
+
+      {/* Drawer móvil para el historial */}
+      <MobileDrawer
+        open={isDrawerOpen}
+        onClose={closeDrawer}
+        onSelectSearch={handleHistorySearchWithClose}
+        onClearHistory={handleClearHistory}
+      />
     </>
   );
 };

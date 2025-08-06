@@ -1,0 +1,327 @@
+// Overlay con blur para el fondo
+.mobile-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+  
+  &.closing {
+    animation: fadeOut 0.3s ease-in;
+  }
+}
+
+// Contenedor principal del drawer
+.mobile-drawer-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 85vh;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px 20px 0 0;
+  
+  &.closing {
+    animation: slideDown 0.3s ease-in;
+  }
+}
+
+// Header del drawer
+.mobile-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+
+  .mobile-drawer-title {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: var(--text-shadow);
+  }
+
+  .mobile-drawer-close {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    svg {
+      font-size: 18px;
+    }
+  }
+}
+
+// Contenido del drawer
+.mobile-drawer-content {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+
+  .recent-searches-panel {
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 20px;
+
+    .recent-searches-header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      .recent-searches-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-shadow: var(--text-shadow);
+        margin: 0;
+      }
+
+      .clear-history-button {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: var(--accent-primary);
+          background: rgba(255, 255, 255, 0.1);
+          transform: scale(1.1);
+        }
+
+        svg {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .recent-searches-list {
+      height: calc(100% - 80px);
+      overflow-y: auto;
+
+      .empty-history {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--text-secondary);
+        font-style: italic;
+        text-align: center;
+        padding: 40px 20px;
+
+        p {
+          margin: 0;
+          font-size: 16px;
+        }
+      }
+
+      .history-items-container {
+        .history-item {
+          padding: 16px;
+          margin-bottom: 12px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(8px);
+          }
+
+          .history-item-icon {
+            font-size: 18px;
+            width: 28px;
+            height: 28px;
+            margin-right: 16px;
+          }
+
+          .history-item-content {
+            .history-item-city {
+              font-size: 16px;
+              font-weight: 500;
+              margin-bottom: 6px;
+            }
+
+            .history-item-details {
+              font-size: 14px;
+              gap: 12px;
+
+              .history-item-country {
+                font-weight: 500;
+              }
+
+              .history-item-time {
+                opacity: 0.8;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+// Ajustes para pantallas muy pequeñas
+@media (width <= 480px) {
+  .mobile-drawer-container {
+    height: 90vh;
+  }
+
+  .mobile-drawer-header {
+    padding: 16px;
+
+    .mobile-drawer-title {
+      font-size: 16px;
+    }
+
+    .mobile-drawer-close {
+      width: 36px;
+      height: 36px;
+      
+      svg {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .mobile-drawer-content {
+    .recent-searches-panel {
+      padding: 16px;
+
+      .recent-searches-header {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+
+        .recent-searches-title {
+          font-size: 18px;
+        }
+
+        .clear-history-button {
+          padding: 8px;
+          
+          svg {
+            font-size: 16px;
+          }
+        }
+      }
+
+      .recent-searches-list {
+        height: calc(100% - 70px);
+
+        .empty-history {
+          padding: 30px 16px;
+
+          p {
+            font-size: 14px;
+          }
+        }
+
+        .history-items-container {
+          .history-item {
+            padding: 12px;
+            margin-bottom: 8px;
+
+            .history-item-icon {
+              font-size: 16px;
+              width: 24px;
+              height: 24px;
+              margin-right: 12px;
+            }
+
+            .history-item-content {
+              .history-item-city {
+                font-size: 14px;
+                margin-bottom: 4px;
+              }
+
+              .history-item-details {
+                font-size: 12px;
+                gap: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 
